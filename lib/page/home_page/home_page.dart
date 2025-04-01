@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/auth_controller.dart';
+import 'package:smart_farm/page/home_page/home_toggle.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -123,6 +124,12 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            Positioned(
+              top: SizeDevice.getHeight(context) * 0.272,
+              left: SizeDevice.getWidth(context) * 0.32,
+              right: SizeDevice.getWidth(context) * 0.32,
+              child: HomeToggle(),
             ),
           ],
         ),

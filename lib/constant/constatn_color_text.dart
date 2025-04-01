@@ -9,6 +9,7 @@ Color softBlue = const Color(0xff007BFF);
 Color redColor = const Color(0XFFD04F48);
 Color whiteColor = Colors.white;
 Color blackColor = Colors.black;
+Color greenColor = Colors.green;
 Color backgroundColor = const Color(0XFFF6F8FB);
 Color greyColor = const Color(0XFF9EABB1);
 Color lightGreyColor = const Color(0xffBDBDBD);
