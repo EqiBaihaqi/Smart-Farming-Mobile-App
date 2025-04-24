@@ -13,7 +13,7 @@ class SplashPage extends StatelessWidget {
       backgroundColor: blueColor,
       body: Center(
         child: Text(
-          '\"Logo\"',
+          'aw',
           style: defaultTextStyle.copyWith(
             fontSize: 35,
             fontWeight: FontWeight.bold,
