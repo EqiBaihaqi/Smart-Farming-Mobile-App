@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:smart_farm/page/home_page/home_page.dart';
+import 'package:smart_farm/home.dart';
 import 'package:smart_farm/page/login_page/login_page.dart';
 import 'package:smart_farm/service/auth_service.dart';
 import 'package:smart_farm/widget/loading_widget.dart';
@@ -11,7 +11,7 @@ class AuthController extends GetxController {
       final user = await AuthService.signInWithGoogle();
       if (user != null) {
         Get.snackbar('Berhasil', 'Login berhasil dilakukan');
-        Get.offAll(() => HomePage());
+        Get.offAll(() => Home());
       } else {
         Get.snackbar('Batal', 'Login dibatalkan');
       }

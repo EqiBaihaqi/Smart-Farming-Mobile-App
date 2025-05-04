@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:smart_farm/page/home_page/home_page.dart';
+import 'package:smart_farm/home.dart';
 import 'package:smart_farm/page/login_page/login_page.dart';
 
 class SplashController extends GetxController {
@@ -15,7 +15,7 @@ class SplashController extends GetxController {
     Future.delayed(const Duration(seconds: 2), () {
       User? user = _firebaseAuth.currentUser;
       if (user != null) {
-        Get.offAll(() => HomePage());
+        Get.offAll(() => Home());
       } else {
         Get.offAll(() => LoginPage());
       }

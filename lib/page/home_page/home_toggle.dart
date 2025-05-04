@@ -11,53 +11,56 @@ class HomeToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Get.put(HomeController());
     return Obx(
-      () => AnimatedToggleSwitch<bool>.dual(
-        current: homeController.isIrrigationOn.value,
-        first: false,
-        second: true,
-        spacing: 50.0,
-        style: const ToggleStyle(
-          borderColor: Colors.transparent,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: Offset(0, 1.5),
-            ),
-          ],
+      () => SizedBox(
+        width: 350,
+        child: AnimatedToggleSwitch<bool>.dual(
+          current: homeController.isIrrigationOn.value,
+          first: false,
+          second: true,
+          style: const ToggleStyle(
+            borderColor: Colors.transparent,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: Offset(0, 1.5),
+              ),
+            ],
+          ),
+          borderWidth: 5.0,
+          spacing: 50.0,
+          height: 55,
+          onChanged: (b) async {
+            if (b) {
+              await homeController.turnOnIrrigation();
+            } else {
+              await homeController.turnOffIrrigation();
+            }
+          },
+          styleBuilder:
+              (b) => ToggleStyle(indicatorColor: b ? greenColor : redColor),
+          iconBuilder:
+              (value) =>
+                  value
+                      ? const Icon(Icons.power_outlined)
+                      : const Icon(Icons.power_off_rounded),
+          textBuilder:
+              (value) =>
+                  value
+                      ? const Center(
+                        child: Text(
+                          'Irigasi Nyala',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      )
+                      : const Center(
+                        child: Text(
+                          'Irigasi Mati',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
         ),
-        borderWidth: 5.0,
-        height: 55,
-        onChanged: (b) async {
-          if (b) {
-            await homeController.turnOnIrrigation();
-          } else {
-            await homeController.turnOffIrrigation();
-          }
-        },
-        styleBuilder:
-            (b) => ToggleStyle(indicatorColor: b ? greenColor : redColor),
-        iconBuilder:
-            (value) =>
-                value
-                    ? const Icon(Icons.power_outlined)
-                    : const Icon(Icons.power_off_rounded),
-        textBuilder:
-            (value) =>
-                value
-                    ? const Center(
-                      child: Text(
-                        'Irigasi Nyala',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    )
-                    : const Center(
-                      child: Text(
-                        'Irigasi Mati',
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
       ),
     );
   }

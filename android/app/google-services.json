@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "501287316017-75qk71v9k6gsj7a8k9kaclhhl5163ff7.apps.googleusercontent.com",
+          "client_id": "501287316017-qmt32gr9qudfcnc77ru88tcqlvskeugn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.smartfarming.app.smart_farm",
-            "certificate_hash": "1c670943463d0aa77dcd471828201ba36a85b8aa"
+            "certificate_hash": "4ae8cc11a7350521de74920037dccde5439dcafa"
           }
         },
         {

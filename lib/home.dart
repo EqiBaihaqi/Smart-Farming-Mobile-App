@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final NavController navController = Get.put(NavController());
 
-    final List<Widget> pages = [HomePage(), AutomationPage(), ChartPage()];
+    final List<Widget> pages = [HomePage(), AutomationPage(), ChartPage(), ];
 
     return Scaffold(
       body: Obx(() => pages[navController.currentIndex.value]),
