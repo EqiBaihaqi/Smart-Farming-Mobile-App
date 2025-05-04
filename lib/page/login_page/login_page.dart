@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sign_in_button/sign_in_button.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/auth_controller.dart';
+import 'package:smart_farm/page/login_page/login_form.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final authController = Get.put(AuthController());
 
+  LoginPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final authController = Get.put(AuthController());
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             Positioned(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: blueColor,
-                ),
-              ),
+              child: Container(decoration: BoxDecoration(color: blueColor)),
             ),
             Positioned(
               top: 0,
@@ -54,24 +53,56 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: SizeDevice.getHeight(context) * 0.5,
-              left: 2,
-              right: 2,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: SignInButton(
-                  Buttons.google,
-                  onPressed: () {
-                    authController.loginWithGoogle();
-                  },
-                  elevation: 6,
-                  padding: EdgeInsets.symmetric(vertical: 12.0),
-                ),
+              top: SizeDevice.getHeight(context) * 0.41,
+              left: 20,
+              right: 20,
+              child: LoginForm(
+                emailController: emailController,
+                passwordController: passwordController,
+                formKey: formKey,
               ),
+            ),
+            // Login Button (Positioned below the form)
+            Positioned(
+              top: SizeDevice.getHeight(context) * 0.61,
+              left: 20,
+              right: 20,
+              child: Obx(() {
+                return authController.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
+                      onPressed: submitForm,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[700],
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        'LOGIN',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+              }),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void submitForm() {
+    if (formKey.currentState!.validate()) {
+      final controller = Get.find<AuthController>();
+      controller.login(
+        emailController.text.trim(),
+        passwordController.text.trim(),
+      );
+    }
   }
 }

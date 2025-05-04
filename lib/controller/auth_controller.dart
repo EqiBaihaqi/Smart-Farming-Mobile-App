@@ -1,37 +1,71 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:smart_farm/home.dart';
+import 'package:smart_farm/model/login_response_model.dart';
 import 'package:smart_farm/page/login_page/login_page.dart';
 import 'package:smart_farm/service/auth_service.dart';
-import 'package:smart_farm/widget/loading_widget.dart';
+import 'package:smart_farm/service/shared_preferences.dart';
+import 'package:smart_farm/widget/snackbar_widget.dart';
+// Add this import
 
 class AuthController extends GetxController {
-  void loginWithGoogle() async {
+  final AuthService _loginService = AuthService();
+  final StorageService _storageService = StorageService();
+
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
+
+  Future<void> login(String username, String password) async {
     try {
-      LoadingWidget.showLoadingDialog();
-      final user = await AuthService.signInWithGoogle();
-      if (user != null) {
-        Get.snackbar('Berhasil', 'Login berhasil dilakukan');
-        Get.offAll(() => Home());
+      isLoading(true);
+      errorMessage('');
+
+      // Now returns a LoginResponse
+      final LoginResponseModel response = await _loginService.login(
+        username,
+        password,
+      );
+
+      // Save tokens using the model
+      await _storageService.saveTokens(
+        response.data!.token!,
+        response.data!.jwtToken!,
+      );
+
+      Get.offAll(() => Home());
+      SnackbarWidget.showSuccess(
+        title: 'Login berhasil',
+        message: 'Selamat datang kembali ^^',
+      );
+    } on DioException catch (e) {
+      // Handle Dio-specific errors
+      final statusCode = e.response?.statusCode;
+
+      if (statusCode == 401) {
+        errorMessage('Invalid email or password');
+      } else if (statusCode == 404) {
+        errorMessage('User not found');
+      } else if (statusCode != null) {
+        errorMessage('Server error ($statusCode)');
       } else {
-        Get.snackbar('Batal', 'Login dibatalkan');
+        errorMessage('Network error: ${e.message}');
       }
     } catch (e) {
-      Get.snackbar('Login Gagal', e.toString());
+      errorMessage('Terjadi kesalahan, coba lagi nanti');
     } finally {
-      LoadingWidget.hideLoadingDialog();
+      isLoading(false);
     }
   }
 
-  void logout() async {
+  Future<void> logout() async {
     try {
-      LoadingWidget.showLoadingDialog();
-      AuthService.signout();
+      await _storageService.clearTokens();
       Get.offAll(() => LoginPage());
-      Get.snackbar('Berhasil', 'Log out berhasil dilakukan');
     } catch (e) {
-      Get.snackbar('Terjadi Kesalahan', 'e.toString');
-    } finally {
-      LoadingWidget.hideLoadingDialog();
+      SnackbarWidget.showError(
+        title: 'Error',
+        message: 'Failed to logout: ${e.toString()}',
+      );
     }
   }
 }

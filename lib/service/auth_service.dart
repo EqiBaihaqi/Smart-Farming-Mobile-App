@@ -1,32 +1,41 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:smart_farm/constant/constant.dart';
+import 'package:smart_farm/model/login_response_model.dart';
 
 class AuthService {
-  static final GoogleSignIn _googleSignIn = GoogleSignIn();
-  static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final Dio _dioWithoutInterceptor = Dio(
+    BaseOptions(
+      baseUrl: Constant.baseUrl,
+      connectTimeout: Duration(seconds: 10),
+      receiveTimeout: Duration(seconds: 10),
+    ),
+  );
 
-  static Future<User?> signInWithGoogle() async {
+  Future<LoginResponseModel> login(String username, String password) async {
     try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final UserCredential userCredential = await _firebaseAuth
-            .signInWithCredential(credential);
-        return userCredential.user;
-      }
-      return null;
-    } catch (e) {
-      throw Exception('Terjadi kesalahan saat sign in : ${e.toString()}');
-    }
-  }
+      final String basicAuth =
+          'Basic ${base64Encode(utf8.encode('$username:$password'))}';
 
-  static Future<void> signout() async {
-    await _googleSignIn.signOut();
-    await _firebaseAuth.signOut();
+      final response = await _dioWithoutInterceptor.post(
+        '/auth/login',
+        options: Options(
+          headers: {
+            'Authorization': basicAuth,
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return LoginResponseModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to login: ${response.statusCode}');
+      }
+    } on DioException catch (e) {
+      throw Exception(e.response?.data?['message'] ?? e.message);
+    } catch (e) {
+      throw Exception('An unexpected error occurred');
+    }
   }
 }

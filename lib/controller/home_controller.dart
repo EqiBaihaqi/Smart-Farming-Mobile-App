@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:smart_farm/service/irrigation_service.dart';
+import 'package:smart_farm/widget/snackbar_widget.dart';
 
 class HomeController extends GetxController {
   RxBool isIrrigationOn = false.obs;
@@ -10,9 +11,15 @@ class HomeController extends GetxController {
 
       if (success) {
         isIrrigationOn(true);
-        Get.snackbar('Berhasil', 'Irigasi berhasil dinyalakan');
+        SnackbarWidget.showSuccess(
+          title: 'Berhasil',
+          message: 'Irigasi berhasil dinyalakan',
+        );
       } else {
-        Get.snackbar('Gagal', 'Irigasi gagal dinyalakan');
+        SnackbarWidget.showError(
+          title: 'Gagal',
+          message: 'Irigasi gagal dinyalakan',
+        );
         isIrrigationOn(false);
       }
     } catch (e) {
@@ -25,9 +32,15 @@ class HomeController extends GetxController {
       final isIrrigationOff = await irrigationService.turnOffIrrigation();
       if (isIrrigationOff) {
         isIrrigationOn(false);
-        Get.snackbar('Berhasil', 'Irigasi berhasil dimatikan');
+        SnackbarWidget.showSuccess(
+          title: 'Berhasil',
+          message: 'Irigasi berhasil dimatikan',
+        );
       } else {
-        Get.snackbar('Gagal', 'Irigasi gagal dimatikan');
+        SnackbarWidget.showError(
+          title: 'Gagal',
+          message: 'Irigasi gagal dimatikan',
+        );
         isIrrigationOn(true);
       }
     } catch (e) {
