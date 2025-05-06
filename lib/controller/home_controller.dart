@@ -1,10 +1,29 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_farm/service/irrigation_service.dart';
 import 'package:smart_farm/widget/snackbar_widget.dart';
 
 class HomeController extends GetxController {
   RxBool isIrrigationOn = false.obs;
   IrrigationService irrigationService = IrrigationService();
+
+  var username = ''.obs;
+  var email = ''.obs;
+  var fullname = ''.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadUserInfo();
+  }
+
+  Future<void> loadUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    username.value = prefs.getString('username') ?? '';
+    email.value = prefs.getString('email') ?? '';
+    fullname.value = prefs.getString('fullname') ?? '';
+  }
+
   Future<void> turnOnIrrigation() async {
     try {
       final success = await irrigationService.turnOnIrrigation();

@@ -30,20 +30,23 @@ class StorageService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_tokenKey);
     await prefs.remove(_jwtTokenKey);
+    await prefs.remove(_emailKey);
+    await prefs.remove(_fullNameKey);
+    await prefs.remove(_usernameKey);
   }
 
-  Future<void> saveUsernameInfo(
-    String username,
-    String email,
-    String fullName,
+  Future<void> saveUserInfo(
+    String? username,
+    String? email,
+    String? fullName,
   ) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_usernameKey, username);
-    await prefs.setString(_emailKey, email);
-    await prefs.setString(_fullNameKey, fullName);
+    await prefs.setString(_usernameKey, username!);
+    await prefs.setString(_emailKey, email!);
+    await prefs.setString(_fullNameKey, fullName!);
   }
 
-  Future<Map<String, String?>> getUsernameInfo() async {
+  Future<Map<String, String?>> getUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
     return {
       'username': prefs.getString(_usernameKey),

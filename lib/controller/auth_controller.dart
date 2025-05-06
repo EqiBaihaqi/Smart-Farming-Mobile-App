@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:smart_farm/home.dart';
+import 'package:smart_farm/model/jwt_response_model.dart';
 import 'package:smart_farm/model/login_response_model.dart';
 import 'package:smart_farm/page/login_page/login_page.dart';
 import 'package:smart_farm/service/auth_service.dart';
@@ -30,6 +32,14 @@ class AuthController extends GetxController {
       await _storageService.saveTokens(
         response.data!.token!,
         response.data!.jwtToken!,
+      );
+      final decodedToken = JwtTokenResponse.fromJson(
+        JwtDecoder.decode(response.data!.jwtToken!),
+      );
+      await _storageService.saveUserInfo(
+        decodedToken.user?.username,
+        decodedToken.user?.email,
+        decodedToken.user?.fullname,
       );
 
       Get.offAll(() => Home());

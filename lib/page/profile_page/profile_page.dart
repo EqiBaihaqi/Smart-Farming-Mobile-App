@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
+import 'package:smart_farm/controller/home_controller.dart';
 import 'package:smart_farm/page/profile_page/profile_informasi_akun_button.dart';
 import 'package:smart_farm/page/profile_page/profile_keluar_button.dart';
 
@@ -9,6 +11,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.find<HomeController>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile', style: defaultTextStyle),
@@ -24,11 +27,13 @@ class ProfilePage extends StatelessWidget {
           ),
           Gap(25),
           Center(
-            child: Text(
-              'Baihaqi',
-              style: defaultTextStyle.copyWith(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+            child: Obx(
+              () => Text(
+                homeController.username.value,
+                style: defaultTextStyle.copyWith(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
