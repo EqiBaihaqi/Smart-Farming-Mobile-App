@@ -34,11 +34,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: SizeDevice.getHeight(context) * 0.01,
-                      right: 0,
-                      child: HomeLogoutButton(),
-                    ),
+                
                     Positioned(
                       top: SizeDevice.getHeight(context) * 0.08,
                       left: 0,
