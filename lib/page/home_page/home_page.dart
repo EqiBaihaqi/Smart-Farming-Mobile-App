@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/page/home_page/home_data_sensor.dart';
 import 'package:smart_farm/page/home_page/home_header.dart';
-import 'package:smart_farm/page/home_page/home_logout_button.dart';
 import 'package:smart_farm/page/home_page/home_toggle.dart';
 
 class HomePage extends StatelessWidget {
