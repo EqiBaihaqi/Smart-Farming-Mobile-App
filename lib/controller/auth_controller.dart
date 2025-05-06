@@ -22,13 +22,13 @@ class AuthController extends GetxController {
       isLoading(true);
       errorMessage('');
 
-      // Now returns a LoginResponse
+      
       final LoginResponseModel response = await _loginService.login(
         username,
         password,
       );
 
-      // Save tokens using the model
+      
       await _storageService.saveTokens(
         response.data!.token!,
         response.data!.jwtToken!,
