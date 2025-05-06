@@ -4,13 +4,12 @@ import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/auth_controller.dart';
 
-
 class ProfileKeluarButton extends StatelessWidget {
   const ProfileKeluarButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final authController = Get.find<AuthController>();
+    final authController = Get.put(AuthController());
     return GestureDetector(
       onTap: () async {
         await showDialog(
@@ -30,7 +29,7 @@ class ProfileKeluarButton extends StatelessWidget {
                       },
 
                       child: Container(
-                        width: SizeDevice.getWidth(context) * 0.3,
+                        width: SizeDevice.getWidth(context) * 0.32,
                         height: SizeDevice.getHeight(context) * 0.07,
                         decoration: BoxDecoration(
                           color: redColor,
@@ -52,7 +51,7 @@ class ProfileKeluarButton extends StatelessWidget {
                     GestureDetector(
                       onTap: () => Get.back(),
                       child: Container(
-                        width: SizeDevice.getWidth(context) * 0.3,
+                        width: SizeDevice.getWidth(context) * 0.32,
                         height: SizeDevice.getHeight(context) * 0.07,
                         decoration: BoxDecoration(
                           color: greyColor,

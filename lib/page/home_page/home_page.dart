@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
+import 'package:smart_farm/controller/home_controller.dart';
 import 'package:smart_farm/page/home_page/home_data_sensor.dart';
 import 'package:smart_farm/page/home_page/home_header.dart';
 import 'package:smart_farm/page/home_page/home_toggle.dart';
@@ -9,6 +12,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.put(HomeController());
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -33,7 +37,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                
+
                     Positioned(
                       top: SizeDevice.getHeight(context) * 0.08,
                       left: 0,
@@ -50,6 +54,24 @@ class HomePage extends StatelessWidget {
                       left: SizeDevice.getWidth(context) * 0.32,
                       right: SizeDevice.getWidth(context) * 0.32,
                       child: HomeToggle(),
+                    ),
+                    Positioned(
+                      top: SizeDevice.getHeight(context) * 0.292,
+                      left: SizeDevice.getWidth(context) * 0.87,
+                      child: Obx(
+                        () => IconButton(
+                          onPressed:
+                              homeController.isLoadingSensor.value
+                                  ? null // Disable button during loading
+                                  : () => homeController.getLatestSensorData(),
+                          icon:
+                              homeController.isLoadingSensor.value
+                                  ? CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ) // Show loader on button
+                                  : FaIcon(FontAwesomeIcons.arrowRotateRight),
+                        ),
+                      ),
                     ),
                   ],
                 ),
