@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/auth_controller.dart';
-import 'package:smart_farm/page/login_page/login_page.dart';
+
 
 class ProfileKeluarButton extends StatelessWidget {
   const ProfileKeluarButton({super.key});
