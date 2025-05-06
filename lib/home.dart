@@ -6,6 +6,7 @@ import 'package:smart_farm/controller/nav_controller.dart';
 import 'package:smart_farm/page/automation_page/automation_page.dart';
 import 'package:smart_farm/page/chart_page/chart_page.dart';
 import 'package:smart_farm/page/home_page/home_page.dart';
+import 'package:smart_farm/page/profile_page/profile_page.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -14,18 +15,23 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final NavController navController = Get.put(NavController());
 
-    final List<Widget> pages = [HomePage(), AutomationPage(), ChartPage(), ];
+    final List<Widget> pages = [
+      HomePage(),
+      AutomationPage(),
+      ChartPage(),
+      ProfilePage(),
+    ];
 
     return Scaffold(
       body: Obx(() => pages[navController.currentIndex.value]),
       bottomNavigationBar: Container(
         color: indigoColor,
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 0),
         child: GNav(
           tabs: [
             GButton(icon: Icons.home, text: 'Home', style: GnavStyle.oldSchool),
             GButton(icon: Icons.auto_awesome, text: 'Automation'),
             GButton(icon: Icons.bar_chart, text: 'Chart'),
+            GButton(icon: Icons.person, text: 'Profil'),
           ],
           activeColor: whiteColor,
           textStyle: defaultTextStyle.copyWith(
