@@ -24,7 +24,7 @@ class SensorController extends GetxController {
       final DateTime now = DateTime.now();
       final String startDate = _formatDate(now);
       final String endDate = _formatDate(now);
-      final data = await sensordataService.fetchGraphicData(
+      final data = await sensordataService.fetchGraphiNpkData(
         metric: 'npk1',
         token: token ?? '',
         startDate: startDate,
