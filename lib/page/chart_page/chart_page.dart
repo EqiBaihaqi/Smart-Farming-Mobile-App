@@ -1,62 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:smart_farm/controller/sensor_controller.dart';
-import 'package:smart_farm/model/sensor_data_mode.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:smart_farm/controller/sensor_controller.dart';
+import 'package:smart_farm/model/npk_data_response_model.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ChartPage extends StatelessWidget {
-  const ChartPage({super.key});
+class NpkChartPage extends StatelessWidget {
+  const NpkChartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SensorController());
     return Scaffold(
-      appBar: AppBar(title: Text('Charts')),
-      body: Container(
-        height: 300,
-        padding: const EdgeInsets.all(8),
-        child: SfCartesianChart(
-          title: ChartTitle(text: 'All Sensor Data'),
-          legend: Legend(isVisible: true, position: LegendPosition.top),
-          primaryXAxis: DateTimeAxis(
-            dateFormat: DateFormat.Hm(),
-            title: AxisTitle(text: 'Time'),
+      appBar: AppBar(
+        title: Text("Grafik NPK"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.loadNpk1GrapchicData();
+              controller.loadNpk2GrapchicData();
+            },
+            icon: Icon(Icons.refresh),
           ),
-          primaryYAxis: NumericAxis(title: AxisTitle(text: 'Values')),
-          tooltipBehavior: TooltipBehavior(enable: true),
-          series: <CartesianSeries<dynamic, dynamic>>[
-            LineSeries<SensorData, DateTime>(
-              dataSource: controller.sensorData,
-              xValueMapper: (SensorData data, _) => data.time,
-              yValueMapper: (SensorData data, _) => data.humidity,
-              name: 'Air Humidity (%)',
-              color: Colors.blue,
+        ],
+      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.npk1List.isEmpty) {
+          return Center(child: Text("Data tidak tersedia"));
+        }
+
+        return Column(
+          children: [
+            // NPK1 DATA GRAPH
+            SfCartesianChart(
+              primaryXAxis: CategoryAxis(),
+              title: ChartTitle(text: 'Grafik Data NPK1'),
+              legend: Legend(isVisible: true),
+              tooltipBehavior: TooltipBehavior(enable: true),
+              series: <CartesianSeries>[
+                LineSeries<NpkDataModel, String>(
+                  name: 'Temp',
+                  dataSource: controller.npk1List,
+                  xValueMapper: (data, _) => '${data.hour}h',
+                  yValueMapper: (data, _) => data.soilTemperature,
+                ),
+                LineSeries<NpkDataModel, String>(
+                  name: 'Humidity',
+                  dataSource: controller.npk1List,
+                  xValueMapper: (data, _) => '${data.hour}h',
+                  yValueMapper: (data, _) => data.soilHumidity,
+                ),
+                LineSeries<NpkDataModel, String>(
+                  name: 'Conductivity',
+                  dataSource: controller.npk1List,
+                  xValueMapper: (data, _) => '${data.hour}h',
+                  yValueMapper: (data, _) => data.soilConductivity,
+                ),
+              ],
             ),
-            LineSeries<SensorData, DateTime>(
-              dataSource: controller.sensorData,
-              xValueMapper: (SensorData data, _) => data.time,
-              yValueMapper: (SensorData data, _) => data.temperature,
-              name: 'Air Temp (°C)',
-              color: Colors.red,
-            ),
-            LineSeries<SensorData, DateTime>(
-              dataSource: controller.sensorData,
-              xValueMapper: (SensorData data, _) => data.time,
-              yValueMapper: (SensorData data, _) => data.soilHumidity,
-              name: 'Soil Humidity (%)',
-              color: Colors.green,
-            ),
-            LineSeries<SensorData, DateTime>(
-              dataSource: controller.sensorData,
-              xValueMapper: (SensorData data, _) => data.time,
-              yValueMapper: (SensorData data, _) => data.soilTemperature,
-              name: 'Soil Temp (°C)',
-              color: Colors.orange,
+            Gap(3),
+            // NPK2 DATA GRAPH
+            SfCartesianChart(
+              primaryXAxis: CategoryAxis(),
+              title: ChartTitle(text: 'Grafik Data NPK1'),
+              legend: Legend(isVisible: true),
+              tooltipBehavior: TooltipBehavior(enable: true),
+              series: <CartesianSeries>[
+                LineSeries<NpkDataModel, String>(
+                  name: 'Temp',
+                  dataSource: controller.npk2List,
+                  xValueMapper: (data, _) => '${data.hour}h',
+                  yValueMapper: (data, _) => data.soilTemperature,
+                ),
+                LineSeries<NpkDataModel, String>(
+                  name: 'Humidity',
+                  dataSource: controller.npk2List,
+                  xValueMapper: (data, _) => '${data.hour}h',
+                  yValueMapper: (data, _) => data.soilHumidity,
+                ),
+                LineSeries<NpkDataModel, String>(
+                  name: 'Conductivity',
+                  dataSource: controller.npk2List,
+                  xValueMapper: (data, _) => '${data.hour}h',
+                  yValueMapper: (data, _) => data.soilConductivity,
+                ),
+              ],
             ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 }

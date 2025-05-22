@@ -1,53 +1,70 @@
 import 'package:get/get.dart';
-import 'package:smart_farm/model/sensor_data_mode.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_farm/model/npk_data_response_model.dart';
+import 'package:smart_farm/service/sensor_data_service.dart';
 
 class SensorController extends GetxController {
-  final sensorData = <SensorData>[].obs;
+  var npk1List = <NpkDataModel>[].obs;
+  var npk2List = <NpkDataModel>[].obs;
+  var sensordataService = SensorDataService();
+  var isLoading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
+    loadNpk1GrapchicData();
     super.onInit();
-    // Initialize with sample data
-    _loadSampleData();
   }
 
-  void _loadSampleData() {
-    final now = DateTime.now();
-    final sampleData = [
-      SensorData(
-        time: now.subtract(Duration(minutes: 30)),
-        humidity: 45.0,
-        temperature: 22.5,
-        soilHumidity: 60.0,
-        soilTemperature: 20.0,
-      ),
-      SensorData(
-        time: now.subtract(Duration(minutes: 20)),
-        humidity: 46.0,
-        temperature: 23.0,
-        soilHumidity: 58.0,
-        soilTemperature: 20.5,
-      ),
-      SensorData(
-        time: now.subtract(Duration(minutes: 10)),
-        humidity: 47.0,
-        temperature: 23.5,
-        soilHumidity: 55.0,
-        soilTemperature: 21.0,
-      ),
-      SensorData(
-        time: now,
-        humidity: 48.0,
-        temperature: 24.0,
-        soilHumidity: 53.0,
-        soilTemperature: 21.5,
-      ),
-    ];
-
-    sensorData.assignAll(sampleData);
+  Future<void> loadNpk1GrapchicData() async {
+    isLoading.value = true;
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    try {
+      final DateTime now = DateTime.now();
+      final String startDate = _formatDate(now);
+      final String endDate = _formatDate(now);
+      final data = await sensordataService.fetchGraphicData(
+        metric: 'npk1',
+        token: token ?? '',
+        startDate: startDate,
+        endDate: endDate,
+      );
+      npk1List.value = data;
+    } catch (e) {
+      print('Error loading NPK data: $e');
+      npk1List.clear();
+    } finally {
+      isLoading.value = false;
+      print('Current NPK data count: ${npk1List.length}');
+    }
   }
 
-  void addData(SensorData newData) {
-    sensorData.add(newData);
+  Future<void> loadNpk2GrapchicData() async {
+    isLoading.value = true;
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    try {
+      final DateTime now = DateTime.now();
+      final String startDate = _formatDate(now);
+      final String endDate = _formatDate(now);
+      final data = await sensordataService.fetchGraphiNpkData(
+        metric: 'npk2',
+        token: token ?? '',
+        startDate: startDate,
+        endDate: endDate,
+      );
+      npk2List.value = data;
+    } catch (e) {
+      print('Error loading NPK data: $e');
+      npk2List.clear();
+    } finally {
+      isLoading.value = false;
+      print('Current NPK data count: ${npk2List.length}');
+    }
+  }
+
+  String _formatDate(DateTime date) {
+    return DateFormat('yyyy-MM-dd').format(date);
   }
 }

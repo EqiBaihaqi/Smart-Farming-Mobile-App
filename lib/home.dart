@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
     final List<Widget> pages = [
       HomePage(),
       AutomationPage(),
-      ChartPage(),
+      NpkChartPage(),
       ProfilePage(),
     ];
 
