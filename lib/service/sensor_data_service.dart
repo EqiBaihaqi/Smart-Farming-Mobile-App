@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:smart_farm/constant/constant.dart';
+import 'package:smart_farm/model/dht_data_response_model.dart';
 import 'package:smart_farm/model/latest_sensor_data_response_model.dart';
 import 'package:smart_farm/model/npk_data_response_model.dart';
 
@@ -59,6 +60,29 @@ class SensorDataService {
         throw Exception('Invalid request. Please check date parameters');
       }
       rethrow;
+    }
+  }
+
+  Future<DhtDataResponseModel> fetchDhtGraphicData({
+    required String token,
+    required String startDate,
+    required String endDate,
+    required String metric,
+  }) async {
+    try {
+      final response = await _dioWithoutInterceptor.get(
+        '/api/sensor/getData',
+        queryParameters: {
+          'sensor': metric,
+          'range[start]': startDate,
+          'range[end]': endDate,
+          'range[time_range]': 'HOURLY',
+        },
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+      );
+      return DhtDataResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception('Failed to fetch DHT data: ${e.message}');
     }
   }
 }
