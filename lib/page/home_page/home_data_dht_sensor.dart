@@ -13,7 +13,7 @@ class HomeDataDhtSensor extends StatelessWidget {
     final homeController = Get.put(HomeController());
     return Container(
       width: double.infinity,
-      height: SizeDevice.getHeight(context) * 0.2,
+      height: SizeDevice.getHeight(context) * 0.19,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: whiteColor,
@@ -27,11 +27,10 @@ class HomeDataDhtSensor extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: SizeDevice.getHeight(context) * 0.01,
+              vertical: SizeDevice.getHeight(context) * 0.012,
             ),
             child: Center(
               child: Text(
@@ -46,7 +45,7 @@ class HomeDataDhtSensor extends StatelessWidget {
 
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: SizeDevice.getWidth(context) * 0.025,
+              horizontal: SizeDevice.getWidth(context) * 0.05,
               vertical: SizeDevice.getHeight(context) * 0.01,
             ),
             child: Obx(
@@ -58,21 +57,21 @@ class HomeDataDhtSensor extends StatelessWidget {
                         children: [
                           SensorWidget(
                             description: 'Temperature',
-                            value: '${homeController.dhtTemp.value}',
+                            value: '${homeController.dhtTemp.value} °C',
                             icon: FontAwesomeIcons.thermometer,
                             color: redColor,
                             isLoading: homeController.isLoadingSensor.value,
                           ),
                           SensorWidget(
                             description: 'Humidity',
-                            value: '${homeController.dhtHumi.value}',
+                            value: '${homeController.dhtHumi.value} %',
                             icon: FontAwesomeIcons.water,
                             color: softBlue,
                             isLoading: homeController.isLoadingSensor.value,
                           ),
                           SensorWidget(
                             description: 'Luminosity',
-                            value: '${homeController.dhtLumi.value}',
+                            value: '${homeController.dhtLumi.value} lx',
                             icon: FontAwesomeIcons.sun,
                             color: Colors.yellow,
                             isLoading: homeController.isLoadingSensor.value,

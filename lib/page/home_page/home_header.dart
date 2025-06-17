@@ -60,11 +60,14 @@ class HomeHeader extends StatelessWidget {
           ],
         ),
         Container(
-          width: 100,
-          height: 100,
+          width: SizeDevice.getWidth(context) * 0.3,
+          height: SizeDevice.getWidth(context) * 0.3,
           decoration: BoxDecoration(
-            color: aquaGreenColor,
             borderRadius: BorderRadius.circular(12),
+            image: DecorationImage(
+              image: AssetImage('assets/gh_pict.jpg'),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ],

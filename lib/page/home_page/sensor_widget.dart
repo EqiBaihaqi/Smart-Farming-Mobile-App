@@ -23,7 +23,7 @@ class SensorWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        FaIcon(icon, size: 43, color: color),
+        FaIcon(icon, size: 35, color: color),
         Gap(6),
         Text(
           description,
@@ -37,7 +37,7 @@ class SensorWidget extends StatelessWidget {
           value ?? '0',
           style: blackTextStyle.copyWith(
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
       ],

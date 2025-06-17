@@ -1,7 +1,10 @@
 // views/automation_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:smart_farm/constant/constatn_color_text.dart'; // Sesuaikan path jika perlu
 import 'package:smart_farm/controller/automation_controller.dart';
+import 'package:smart_farm/page/automation_page/automation_log.dart';
+import 'package:switcher_button/switcher_button.dart';
 
 class AutomationPage extends StatelessWidget {
   const AutomationPage({super.key});
@@ -9,60 +12,73 @@ class AutomationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AutomationController());
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Automation Status'), centerTitle: true),
-      body: Obx(
-        () => Center(
+      appBar: AppBar(
+        title: Text(
+          'Otomatisasi',
+          style: blackTextStyle.copyWith(fontSize: 22),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Status Card
+              // --- KARTU STATUS OTOMATISASI (TIDAK BERUBAH) ---
               Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.all(24),
+                height: 80,
                 decoration: BoxDecoration(
-                  color:
-                      controller.isAutomationActive.value
-                          ? Colors.green.shade50
-                          : Colors.red.shade50,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(12),
+                  color: whiteColor,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+                      color: Colors.grey.withValues(alpha: 0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
-                child: Column(
-                  children: [
-                    Icon(
-                      controller.isAutomationActive.value
-                          ? Icons.check_circle
-                          : Icons.cancel,
-                      color:
-                          controller.isAutomationActive.value
-                              ? Colors.green
-                              : Colors.red,
-                      size: 64,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      controller.isAutomationActive.value
-                          ? 'AUTOMATION ACTIVE'
-                          : 'AUTOMATION INACTIVE',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            controller.isAutomationActive.value
-                                ? Colors.green
-                                : Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'STATUS OTOMATISASI',
+                        style: defaultTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                      Obx(() {
+                        if (controller.isLoadingStatus.isTrue) {
+                          return const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(strokeWidth: 2.0),
+                          );
+                        }
+                        return SwitcherButton(
+                          value: controller.automationStatus.value ?? false,
+                          offColor: greyColor,
+                          onColor: indigoColor,
+                          onChange: (value) {
+                            controller.updateAutomationStatus(value);
+                          },
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
+              const SizedBox(height: 20),
+              Divider(),
+              const SizedBox(height: 20),
+              AutomationLog(),
             ],
           ),
         ),
