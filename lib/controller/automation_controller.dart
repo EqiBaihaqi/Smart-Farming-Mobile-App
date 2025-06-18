@@ -102,6 +102,7 @@ class AutomationController extends GetxController {
       final response = await service.getAutomationLog(token ?? '');
       automationLogList.assignAll(response.data);
     } catch (e) {
+      print(e);
       Get.snackbar('Error', 'Terjadi kesalahan saat mengambil data log');
     } finally {
       isLoadingLogs(false);
