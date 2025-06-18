@@ -24,62 +24,77 @@ class AutomationPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // --- KARTU STATUS OTOMATISASI (TIDAK BERUBAH) ---
-              Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: whiteColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.2),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'STATUS OTOMATISASI',
-                        style: defaultTextStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              await controller.getAutomationLog();
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // --- KARTU STATUS OTOMATISASI (TIDAK BERUBAH) ---
+                Container(
+                  height: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: whiteColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withValues(alpha: 0.2),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
                       ),
-                      Obx(() {
-                        if (controller.isLoadingStatus.isTrue) {
-                          return const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2.0),
-                          );
-                        }
-                        return SwitcherButton(
-                          value: controller.automationStatus.value ?? false,
-                          offColor: greyColor,
-                          onColor: indigoColor,
-                          onChange: (value) {
-                            controller.updateAutomationStatus(value);
-                          },
-                        );
-                      }),
                     ],
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'STATUS OTOMATISASI',
+                          style: defaultTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Obx(() {
+                          if (controller.isLoadingStatus.isTrue) {
+                            return const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                              ),
+                            );
+                          }
+                          return SwitcherButton(
+                            value: controller.automationStatus.value ?? false,
+                            offColor: greyColor,
+                            onColor: indigoColor,
+                            onChange: (value) {
+                              controller.updateAutomationStatus(value);
+                            },
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Divider(),
-              const SizedBox(height: 20),
-              AutomationLog(),
-            ],
+                const SizedBox(height: 20),
+                Divider(),
+                const SizedBox(height: 10),
+                Text(
+                  'Log Otomatisasi',
+                  style: defaultTextStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                AutomationLog(),
+              ],
+            ),
           ),
         ),
       ),

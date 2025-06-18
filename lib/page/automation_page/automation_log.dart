@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/automation_controller.dart';
+import 'package:smart_farm/page/automation_page/automation_log_shimmer.dart';
 import 'package:smart_farm/page/automation_page/automation_log_widget.dart';
 
 class AutomationLog extends StatelessWidget {
@@ -13,12 +14,7 @@ class AutomationLog extends StatelessWidget {
     final controller = Get.find<AutomationController>();
     return Obx(() {
       if (controller.isLoadingLogs.isTrue) {
-        return const Center(
-          child: Padding(
-            padding: EdgeInsets.all(32.0),
-            child: CircularProgressIndicator(),
-          ),
-        );
+        return AutomationLogShimmer();
       }
       if (controller.automationLogList.isEmpty) {
         return const Center(
@@ -30,7 +26,6 @@ class AutomationLog extends StatelessWidget {
       }
       return ListView.builder(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         itemCount: controller.automationLogList.length,
         itemBuilder: (context, index) {
           final log = controller.automationLogList[index];

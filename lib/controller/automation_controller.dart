@@ -17,7 +17,7 @@ class AutomationController extends GetxController {
   // Gunakan Rxn<bool> agar bisa membedakan kondisi null (belum dimuat)
   var automationStatus = Rxn<bool>();
   // State baru untuk loading status awal
-  var isLoadingStatus = true.obs;
+  var isLoadingStatus = false.obs;
 
   @override
   void onInit() {
@@ -27,7 +27,7 @@ class AutomationController extends GetxController {
   }
 
   /// Mengambil status otomasi terbaru dari server
-  void getAutomationStatus() async {
+  Future<void> getAutomationStatus() async {
     // Selalu set loading true di awal
     isLoadingStatus(true);
     try {
@@ -58,7 +58,7 @@ class AutomationController extends GetxController {
   }
 
   // di dalam automation_controller.dart
-  void updateAutomationStatus(bool newStatus) async {
+  Future<void> updateAutomationStatus(bool newStatus) async {
     // Tambahkan state loading khusus untuk update
     // Anda bisa menambahkannya di atas: var isUpdatingStatus = false.obs;
 
@@ -94,7 +94,7 @@ class AutomationController extends GetxController {
   }
 
   /// Mengambil log otomatisasi
-  void getAutomationLog() async {
+  Future<void> getAutomationLog() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     try {
