@@ -50,7 +50,6 @@ dependencies:
   jwt_decoder: ^2.0.1
   font_awesome_flutter: ^10.8.0
   fl_chart: ^1.0.0
-  switcher_button: ^0.0.4
   expandable: ^5.0.1
   shimmer: ^3.0.0
 dev_dependencies:
