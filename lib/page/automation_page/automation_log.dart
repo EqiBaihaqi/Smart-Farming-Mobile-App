@@ -26,6 +26,8 @@ class AutomationLog extends StatelessWidget {
       }
       return ListView.builder(
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        scrollDirection: Axis.vertical,
         itemCount: controller.automationLogList.length,
         itemBuilder: (context, index) {
           final log = controller.automationLogList[index];
