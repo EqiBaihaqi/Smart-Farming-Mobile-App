@@ -29,11 +29,11 @@ class AutomationLog extends StatelessWidget {
         itemCount: controller.automationLogList.length,
         itemBuilder: (context, index) {
           final log = controller.automationLogList[index];
-          final keputusan = log.decision;
+          final keputusan = log.state;
           final keputusanColor =
-              log.decision == 'buka'
+              log.state == 'buka'
                   ? const Color(0xFF3377FF)
-                  : log.decision == 'NO_ACTION'
+                  : log.state == 'NO_ACTION'
                   ? blackColor
                   : Colors.red;
 

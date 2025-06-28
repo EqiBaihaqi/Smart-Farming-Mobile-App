@@ -32,8 +32,7 @@ class Datum {
   double dhtTemperatureInput;
   double npkTemperatureInput;
   double npkHumidityInput;
-  String decision;
-  DateTime createdAt;
+  String state;
 
   Datum({
     required this.id,
@@ -42,8 +41,7 @@ class Datum {
     required this.dhtTemperatureInput,
     required this.npkTemperatureInput,
     required this.npkHumidityInput,
-    required this.decision,
-    required this.createdAt,
+    required this.state,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -53,8 +51,7 @@ class Datum {
     dhtTemperatureInput: (json["dht_temperature_input"] as num).toDouble(),
     npkTemperatureInput: (json["npk_temperature_input"] as num).toDouble(),
     npkHumidityInput: (json["npk_humidity_input"] as num).toDouble(),
-    decision: json["decision"],
-    createdAt: DateTime.parse(json["created_at"]),
+    state: json["state"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +61,6 @@ class Datum {
     "dht_temperature_input": dhtTemperatureInput,
     "npk_temperature_input": npkTemperatureInput,
     "npk_humidity_input": npkHumidityInput,
-    "decision": decision,
-    "created_at": createdAt.toIso8601String(),
+    "state": state,
   };
 }

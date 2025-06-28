@@ -18,7 +18,8 @@ class ProfileKeluarButton extends StatelessWidget {
               (context) => AlertDialog(
                 title: Text(
                   'Anda yakin ingin keluar?',
-                  style: defaultTextStyle,
+                  style: defaultTextStyle.copyWith(fontSize: 16),
+                  textAlign: TextAlign.center,
                 ),
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -48,13 +49,14 @@ class ProfileKeluarButton extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Gap(8),
                     GestureDetector(
                       onTap: () => Get.back(),
                       child: Container(
                         width: SizeDevice.getWidth(context) * 0.32,
                         height: SizeDevice.getHeight(context) * 0.07,
                         decoration: BoxDecoration(
-                          color: greyColor,
+                          color: whiteColor,
                           border: Border.all(color: blackColor),
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -62,7 +64,7 @@ class ProfileKeluarButton extends StatelessWidget {
                           child: Text(
                             'Tidak',
                             style: defaultTextStyle.copyWith(
-                              color: whiteColor,
+                              color: blackColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
                             ),
