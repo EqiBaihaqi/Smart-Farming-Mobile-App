@@ -6,45 +6,56 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_farm/model/chart_data_sensor_response_model.dart';
 import 'package:smart_farm/service/sensor_data_service.dart';
+import 'package:smart_farm/widget/snackbar_widget.dart';
 
 class ChartController extends GetxController {
   final SensorDataService _apiService = SensorDataService();
 
-  // --- STATE KEMBALI DISEDERHANAKAN ---
   var isLoading = true.obs;
-  // Kembali ke satu list data untuk satu grafik
   var chartData = <ChartDataSensorResponseModel>[].obs;
 
-  // State untuk pilihan di UI
-  var selectedSensor = 'dht'.obs;
-  var selectedMetric = 'temperature'.obs;
+  var selectedSensor = 'npk2'.obs;
+  var selectedMetric = 'soilHumidity'.obs;
   var selectedDate = DateTime.now().obs;
   var displayDate = ''.obs;
 
-  // --- Opsi untuk Dropdown Disesuaikan ---
-  final List<String> sensorOptions = ['dht', 'npk', 'npk2'];
+  final List<String> sensorOptions = ['dht', 'npk1', 'npk2'];
 
-  // Map ini sangat berguna untuk menyediakan opsi metrik yang dinamis
   final Map<String, List<String>> metricOptions = {
-    'dht': ['temperature', 'humidity', 'luminosity'],
-    'npk': [
-      'temperature',
-      'humidity',
-      'ph',
-      'nitrogen',
-      'potassium',
-      'phosphorus',
-      'conductivity',
+    'dht': ['viciTemperature', 'viciHumidity', 'viciLuminosity'],
+    'npk1': [
+      'soilTemperature',
+      'soilHumidity',
+      'soilPh',
+      'soilNitrogen',
+      'soilPotassium',
+      'soilPhosphorus',
+      'soilConductivity',
     ],
     'npk2': [
-      'temperature',
-      'humidity',
-      'ph',
-      'nitrogen',
-      'potassium',
-      'phosphorus',
-      'conductivity',
+      'soilTemperature',
+      'soilHumidity',
+      'soilPh',
+      'soilNitrogen',
+      'soilPotassium',
+      'soilPhosphorus',
+      'soilConductivity',
     ],
+  };
+
+  // --- PENYEMPURNAAN: Tambahkan Map untuk Label yang User-Friendly ---
+  // Ini membuat UI lebih mudah dibaca daripada menampilkan kunci mentah seperti 'viciTemperature'
+  final Map<String, String> metricLabels = {
+    'viciTemperature': 'Temperature',
+    'viciHumidity': 'Humidity',
+    'viciLuminosity': 'Luminosity',
+    'soilTemperature': 'Temperature',
+    'soilHumidity': 'Humidity',
+    'soilPh': 'pH',
+    'soilNitrogen': 'Nitrogen (N)',
+    'soilPotassium': 'Potassium (K)',
+    'soilPhosphorus': 'Phosphorus (P)',
+    'soilConductivity': 'Conductivity',
   };
 
   @override
@@ -83,33 +94,41 @@ class ChartController extends GetxController {
     }
   }
 
-  // --- FUNGSI FETCHDATA KEMBALI SEDERHANA ---
   Future<void> fetchData() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    if (token == null) {
+      Get.snackbar(
+        'Error',
+        'Sesi berakhir, silahkan login kembali.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      isLoading.value = false;
+      return;
+    }
+
     try {
       isLoading.value = true;
       final result = await _apiService.getChartData(
-        token: token!,
-        sensor: selectedSensor.value, // Langsung pakai state
-        metric: selectedMetric.value, // Langsung pakai state
+        token: token,
+        sensor: selectedSensor.value,
+        metric: selectedMetric.value,
         date: selectedDate.value,
       );
       chartData.value = result;
+      print(result);
     } catch (e) {
-      Get.snackbar('Error', e.toString(), snackPosition: SnackPosition.BOTTOM);
-      chartData.value = []; // Kosongkan data jika error
+      print(e.toString());
+      SnackbarWidget.showError(title: 'Gagal', message: 'Gagal memuat data');
+      chartData.value = [];
     } finally {
       isLoading.value = false;
     }
   }
 
-  // --- FUNGSI HANDLER UNTUK UI ---
   void onSensorChanged(String? newSensor) {
     if (newSensor != null && newSensor != selectedSensor.value) {
       selectedSensor.value = newSensor;
-      // PENTING: Reset pilihan metrik ke item pertama dari list yang baru
-      // Ini untuk menghindari state yang tidak valid (misal: sensor 'dht' dengan metrik 'ph')
       selectedMetric.value = metricOptions[newSensor]![0];
       fetchData();
     }

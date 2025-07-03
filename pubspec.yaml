@@ -52,6 +52,7 @@ dependencies:
   fl_chart: ^1.0.0
   expandable: ^5.0.1
   shimmer: ^3.0.0
+  dio_smart_retry: ^7.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

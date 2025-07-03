@@ -1,5 +1,4 @@
-// REKOMENDASI: Hapus fungsi helper ini karena tidak sesuai dan tidak digunakan.
-// Service Anda sudah melakukan parsing manual yang lebih baik.
+// Di dalam file model ChartDataSensorResponseModel
 
 class ChartDataSensorResponseModel {
   final DateTime timestamp;
@@ -8,13 +7,13 @@ class ChartDataSensorResponseModel {
   ChartDataSensorResponseModel({required this.timestamp, required this.value});
 
   factory ChartDataSensorResponseModel.fromJson(Map<String, dynamic> json) {
-    return ChartDataSensorResponseModel(
-      timestamp: DateTime.parse(json["time_bucket"]),
+    // Parsing value dibuat lebih aman untuk menangani null atau tipe data lain
+    final double parsedValue = (json['avg_value'] as num?)?.toDouble() ?? 0.0;
 
-      // --- PERBAIKAN DI SINI ---
-      // Ubah dari casting 'as num' menjadi parsing 'double.parse()'
-      // Tambahkan .toString() untuk keamanan jika suatu saat API mengirim angka, bukan string
-      value: double.parse(json["avg_value"].toString()),
+    return ChartDataSensorResponseModel(
+      // Parsing timestamp sekarang akan berhasil karena service sudah menyediakan format yang benar
+      timestamp: DateTime.parse(json["time_bucket"]),
+      value: parsedValue,
     );
   }
 }

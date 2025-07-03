@@ -56,9 +56,9 @@ class Data {
 }
 
 class Dht {
-  num humidity;
-  num luminosity;
-  num temperature;
+  int? humidity;
+  int? luminosity;
+  int? temperature;
 
   Dht({
     required this.humidity,
@@ -67,9 +67,9 @@ class Dht {
   });
 
   factory Dht.fromJson(Map<String, dynamic> json) => Dht(
-    humidity: json["humidity"]?.toDouble(),
-    luminosity: json["luminosity"]?.toDouble(),
-    temperature: json["temperature"]?.toDouble(),
+    humidity: json["viciHumidity"] ?? 0,
+    luminosity: json["viciLuminosity"] ?? 0,
+    temperature: json["viciTemperature"] ?? 0,
   );
 
   Map<String, dynamic> toJson() => {
@@ -80,13 +80,13 @@ class Dht {
 }
 
 class Npk {
-  num ph;
-  num humidity;
-  num nitrogen;
-  num potassium;
-  num phosphorus;
-  num temperature;
-  num conductivity;
+  int? ph;
+  int? humidity;
+  int? nitrogen;
+  int? potassium;
+  int? phosphorus;
+  int? temperature;
+  int? conductivity;
 
   Npk({
     required this.ph,
@@ -99,13 +99,13 @@ class Npk {
   });
 
   factory Npk.fromJson(Map<String, dynamic> json) => Npk(
-    ph: json["ph"]?.toDouble(),
-    humidity: json["humidity"],
-    nitrogen: json["nitrogen"],
-    potassium: json["potassium"],
-    phosphorus: json["phosphorus"],
-    temperature: json["temperature"],
-    conductivity: json["conductivity"],
+    ph: json["soilPh"] ?? 0,
+    humidity: json["soilHumidity"] ?? 0,
+    nitrogen: json["soilNitrogen"] ?? 0,
+    potassium: json["soilPotassium"] ?? 0,
+    phosphorus: json["soilPhosphorus"] ?? 0,
+    temperature: json["soilTemperature"] ?? 0,
+    conductivity: json["soilConductivity"] ?? 0,
   );
 
   Map<String, dynamic> toJson() => {

@@ -13,7 +13,7 @@ class HomeDataNpk2Sensor extends StatelessWidget {
     final homeController = Get.put(HomeController());
     return Container(
       width: double.infinity,
-      height: SizeDevice.getHeight(context) * 0.31,
+      height: SizeDevice.getHeight(context) * 0.35,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: whiteColor,
