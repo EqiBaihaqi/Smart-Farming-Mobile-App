@@ -33,7 +33,7 @@ class AutomationService {
     );
   }
 
-  Future<AutomationLogResponseModel> getAutomationLog(String token) async {
+  Future<AutomationLogResponseModel> getAutomationLog(String token, ) async {
     try {
       final response = await dio.get(
         '/api/automation/logs',
@@ -62,32 +62,32 @@ class AutomationService {
   }
 
   // di dalam automation_service.dart
-  Future<AutomationStatusResponseModel> updateAutomationStatus({
-    required String token,
-    required bool isActive,
-  }) async {
-    try {
-      final response = await dio.post(
-        '/api/automation/status',
-        data: {'is_active': isActive},
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
-      );
+  // Future<AutomationStatusResponseModel> updateAutomationStatus({
+  //   required String token,
+  //   required bool isActive,
+  // }) async {
+  //   try {
+  //     final response = await dio.post(
+  //       '/api/automation/status',
+  //       data: {'is_active': isActive},
+  //       options: Options(headers: {'Authorization': 'Bearer $token'}),
+  //     );
 
-      // --- TAMBAHKAN BARIS INI UNTUK DEBUGGING ---
-      print('[SERVER RESPONSE DATA]: ${response.data}');
+  //     // --- TAMBAHKAN BARIS INI UNTUK DEBUGGING ---
+  //     print('[SERVER RESPONSE DATA]: ${response.data}');
 
-      // Parsing akan terjadi di sini, ini adalah kemungkinan sumber error
-      return AutomationStatusResponseModel.fromJson(response.data);
-    } on DioException catch (e) {
-      // Menangkap error koneksi/http
-      print(e);
-      throw Exception(
-        "Error ${e.response?.statusCode}: Gagal memperbarui status.",
-      );
-    } catch (e) {
-      // Menangkap error lainnya, seperti parsing JSON
-      print('[PARSING ERROR]: $e');
-      throw Exception('Gagal memproses data dari server.');
-    }
-  }
+  //     // Parsing akan terjadi di sini, ini adalah kemungkinan sumber error
+  //     return AutomationStatusResponseModel.fromJson(response.data);
+  //   } on DioException catch (e) {
+  //     // Menangkap error koneksi/http
+  //     print(e);
+  //     throw Exception(
+  //       "Error ${e.response?.statusCode}: Gagal memperbarui status.",
+  //     );
+  //   } catch (e) {
+  //     // Menangkap error lainnya, seperti parsing JSON
+  //     print('[PARSING ERROR]: $e');
+  //     throw Exception('Gagal memproses data dari server.');
+  //   }
+  // }
 }

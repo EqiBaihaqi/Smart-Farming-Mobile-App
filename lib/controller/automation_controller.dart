@@ -58,40 +58,40 @@ class AutomationController extends GetxController {
   }
 
   // di dalam automation_controller.dart
-  Future<void> updateAutomationStatus(bool newStatus) async {
-    // Tambahkan state loading khusus untuk update
-    // Anda bisa menambahkannya di atas: var isUpdatingStatus = false.obs;
+  // Future<void> updateAutomationStatus(bool newStatus) async {
+  //   // Tambahkan state loading khusus untuk update
+  //   // Anda bisa menambahkannya di atas: var isUpdatingStatus = false.obs;
 
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final token = prefs.getString('token');
 
-    if (token == null || token.isEmpty) {
-      Get.snackbar('Error', 'Token tidak ditemukan, silakan login ulang.');
-      return;
-    }
+  //   if (token == null || token.isEmpty) {
+  //     Get.snackbar('Error', 'Token tidak ditemukan, silakan login ulang.');
+  //     return;
+  //   }
 
-    try {
-      // Panggil service dan TUNGGU responsnya
-      final response = await service.updateAutomationStatus(
-        token: token,
-        isActive: newStatus,
-      );
+  //   try {
+  //     // Panggil service dan TUNGGU responsnya
+  //     final response = await service.updateAutomationStatus(
+  //       token: token,
+  //       isActive: newStatus,
+  //     );
 
-      // JIKA BERHASIL (termasuk parsing), baru update UI dan tampilkan notifikasi sukses
-      automationStatus.value = response.isActive;
-      SnackbarWidget.showSuccess(
-        title: 'Berhasil',
-        message: 'Perubahan berhasil dilakukan',
-      );
-    } catch (e) {
-      // Jika ada error apapun (koneksi, parsing, dll), tampilkan pesan error
-      SnackbarWidget.showError(
-        title: 'Gagal',
-        message: 'Perubahan gagal dilakukan',
-      );
-      // Karena kita tidak melakukan optimistic update, kita tidak perlu mengembalikan state
-    }
-  }
+  //     // JIKA BERHASIL (termasuk parsing), baru update UI dan tampilkan notifikasi sukses
+  //     automationStatus.value = response.isActive;
+  //     SnackbarWidget.showSuccess(
+  //       title: 'Berhasil',
+  //       message: 'Perubahan berhasil dilakukan',
+  //     );
+  //   } catch (e) {
+  //     // Jika ada error apapun (koneksi, parsing, dll), tampilkan pesan error
+  //     SnackbarWidget.showError(
+  //       title: 'Gagal',
+  //       message: 'Perubahan gagal dilakukan',
+  //     );
+  //     // Karena kita tidak melakukan optimistic update, kita tidak perlu mengembalikan state
+  //   }
+  // }
 
   /// Mengambil log otomatisasi
   Future<void> getAutomationLog() async {
