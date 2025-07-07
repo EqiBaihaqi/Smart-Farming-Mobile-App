@@ -26,8 +26,8 @@ class ChartWidget extends StatelessWidget {
     final minX = displayData.first.timestamp.millisecondsSinceEpoch.toDouble();
     final maxX = displayData.last.timestamp.millisecondsSinceEpoch.toDouble();
     final yValues = displayData.map((p) => p.value).toList();
-    final minY = yValues.reduce(min) * 0.95; 
-    final maxY = yValues.reduce(max) * 1.05; 
+    final minY = yValues.reduce(min) * 0.95;
+    final maxY = yValues.reduce(max) * 1.05;
 
     return LineChart(
       LineChartData(
@@ -57,7 +57,8 @@ class ChartWidget extends StatelessWidget {
           ),
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
-              reservedSize: 40,
+              reservedSize: 45,
+              maxIncluded: false,
               minIncluded: false,
               showTitles: true,
               interval: (maxY - minY) / 3,
