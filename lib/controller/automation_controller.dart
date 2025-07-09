@@ -1,10 +1,12 @@
 // controllers/automation_controller.dart
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_farm/model/automation_log_response_model.dart';
 import 'package:smart_farm/service/automation_service.dart';
-import 'package:smart_farm/widget/snackbar_widget.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AutomationController extends GetxController {
   final AutomationService service = AutomationService();
@@ -24,9 +26,10 @@ class AutomationController extends GetxController {
     super.onInit();
     getAutomationStatus();
     getAutomationLog();
+    updateDisplayDate();
   }
 
-  /// Mengambil status otomasi terbaru dari server
+  // Mengambil status otomasi terbaru dari server
   Future<void> getAutomationStatus() async {
     // Selalu set loading true di awal
     isLoadingStatus(true);
@@ -92,20 +95,92 @@ class AutomationController extends GetxController {
   //     // Karena kita tidak melakukan optimistic update, kita tidak perlu mengembalikan state
   //   }
   // }
-
-  /// Mengambil log otomatisasi
+  var selectedDate = DateTime.now().obs;
+  // Mengambil log otomatisasi
   Future<void> getAutomationLog() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     try {
       isLoadingLogs(true);
-      final response = await service.getAutomationLog(token ?? '');
+      final response = await service.getAutomationLog(
+        token ?? '',
+        selectedDate.value,
+      );
       automationLogList.assignAll(response.data);
     } catch (e) {
       print(e);
       Get.snackbar('Error', 'Terjadi kesalahan saat mengambil data log');
     } finally {
       isLoadingLogs(false);
+    }
+  }
+
+  // memilih tanggal
+  Future<void> selectDate(BuildContext context) async {
+    DateTime? pickedDate = selectedDate.value;
+
+    await Get.dialog(
+      Dialog(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SfDateRangePicker(
+                view: DateRangePickerView.month,
+                selectionMode: DateRangePickerSelectionMode.single,
+                initialSelectedDate: selectedDate.value,
+                maxDate:
+                    DateTime.now(), // Pengguna tidak bisa memilih hari di masa depan
+                onSelectionChanged: (DateRangePickerSelectionChangedArgs args) {
+                  if (args.value is DateTime) {
+                    pickedDate = args.value;
+                  }
+                },
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: const Text('Batal'),
+                  ),
+                  const SizedBox(width: 8),
+                  FilledButton(
+                    onPressed: () {
+                      if (pickedDate != null) {
+                        selectedDate.value = pickedDate!;
+                        updateDisplayDate(); // Perbarui teks tanggal
+                        getAutomationLog(); // Ambil data log baru
+                      }
+                      Get.back(); // Tutup dialog
+                      updateDisplayDate();
+                    },
+                    child: const Text('Pilih'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  var displayDate = ''.obs;
+  // Update date view
+  void updateDisplayDate() {
+    final now = DateTime.now();
+    if (selectedDate.value.year == now.year &&
+        selectedDate.value.month == now.month &&
+        selectedDate.value.day == now.day) {
+      displayDate.value = "Hari Ini";
+    } else {
+      displayDate.value = DateFormat(
+        'd MMMM yyyy',
+        'id_ID',
+      ).format(selectedDate.value);
     }
   }
 }

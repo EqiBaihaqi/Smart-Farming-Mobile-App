@@ -13,6 +13,7 @@ class AuthService {
     : dio = Dio(
         BaseOptions(
           baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
+          // baseUrl: 'http://10.0.2.2:3333',
           connectTimeout: Duration(seconds: 5),
           receiveTimeout: Duration(seconds: 5),
         ),
@@ -66,13 +67,10 @@ class AuthService {
         throw Exception('Failed to login: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      // --- PERBAIKI BLOK CATCH INI ---
       print("Dio Error!");
       print("Type: ${e.type}");
       print("Message: ${e.message}");
-      print(
-        "Response: ${e.response?.data}",
-      ); // Cetak respons error dari server jika ada
+      print("Response: ${e.response?.data}");
 
       throw Exception(
         e.response?.data?['message'] ?? 'Koneksi ke server gagal: ${e.type}',

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
-import 'package:smart_farm/constant/constant.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_farm/model/automation_log_response_model.dart';
 import 'package:smart_farm/model/automation_status_response_model.dart';
 
@@ -9,7 +9,8 @@ class AutomationService {
   AutomationService()
     : dio = Dio(
         BaseOptions(
-          baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
+          // baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
+          baseUrl: 'http://10.0.2.2:3333',
           connectTimeout: Duration(seconds: 5),
           receiveTimeout: Duration(seconds: 5),
         ),
@@ -33,11 +34,19 @@ class AutomationService {
     );
   }
 
-  Future<AutomationLogResponseModel> getAutomationLog(String token, ) async {
+  Future<AutomationLogResponseModel> getAutomationLog(
+    String token,
+    DateTime date,
+  ) async {
     try {
+      final formattedDate = DateFormat('yyyy-MM-dd').format(date);
       final response = await dio.get(
         '/api/automation/logs',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
+        queryParameters: {
+          'start_date': formattedDate,
+          'end_date': formattedDate,
+        },
       );
       return AutomationLogResponseModel.fromJson(response.data);
     } on DioException catch (e) {

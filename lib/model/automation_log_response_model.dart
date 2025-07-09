@@ -4,63 +4,62 @@
 
 import 'dart:convert';
 
-AutomationLogResponseModel automationLogResponseModelFromJson(String str) =>
-    AutomationLogResponseModel.fromJson(json.decode(str));
+AutomationLogResponseModel automationLogResponseModelFromJson(String str) => AutomationLogResponseModel.fromJson(json.decode(str));
 
-String automationLogResponseModelToJson(AutomationLogResponseModel data) =>
-    json.encode(data.toJson());
+String automationLogResponseModelToJson(AutomationLogResponseModel data) => json.encode(data.toJson());
 
 class AutomationLogResponseModel {
-  List<Datum> data;
+    List<Datum> data;
 
-  AutomationLogResponseModel({required this.data});
+    AutomationLogResponseModel({
+        required this.data,
+    });
 
-  factory AutomationLogResponseModel.fromJson(Map<String, dynamic> json) =>
-      AutomationLogResponseModel(
+    factory AutomationLogResponseModel.fromJson(Map<String, dynamic> json) => AutomationLogResponseModel(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+    Map<String, dynamic> toJson() => {
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    };
 }
 
 class Datum {
-  int id;
-  DateTime executedAt;
-  double dhtHumidityInput;
-  double dhtTemperatureInput;
-  double npkTemperatureInput;
-  double npkHumidityInput;
-  String state;
+    int id;
+    int batchLocationId;
+    double dhtTemperatureInput;
+    double npkHumidityInput;
+    String state;
+    int duration;
+    DateTime executedAt;
 
-  Datum({
-    required this.id,
-    required this.executedAt,
-    required this.dhtHumidityInput,
-    required this.dhtTemperatureInput,
-    required this.npkTemperatureInput,
-    required this.npkHumidityInput,
-    required this.state,
-  });
+    Datum({
+        required this.id,
+        required this.batchLocationId,
+        required this.dhtTemperatureInput,
+        required this.npkHumidityInput,
+        required this.state,
+        required this.duration,
+        required this.executedAt,
+    });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    executedAt: DateTime.parse(json["executed_at"]),
-    dhtHumidityInput: (json["dht_humidity_input"] as num).toDouble(),
-    dhtTemperatureInput: (json["dht_temperature_input"] as num).toDouble(),
-    npkTemperatureInput: (json["npk_temperature_input"] as num).toDouble(),
-    npkHumidityInput: (json["npk_humidity_input"] as num).toDouble(),
-    state: json["state"],
-  );
+    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        id: json["id"],
+        batchLocationId: json["batch_location_id"],
+        dhtTemperatureInput: json["dht_temperature_input"]?.toDouble(),
+        npkHumidityInput: json["npk_humidity_input"]?.toDouble(),
+        state: json["state"],
+        duration: json["duration"],
+        executedAt: DateTime.parse(json["executed_at"]),
+    );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "executed_at": executedAt.toIso8601String(),
-    "dht_humidity_input": dhtHumidityInput,
-    "dht_temperature_input": dhtTemperatureInput,
-    "npk_temperature_input": npkTemperatureInput,
-    "npk_humidity_input": npkHumidityInput,
-    "state": state,
-  };
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "batch_location_id": batchLocationId,
+        "dht_temperature_input": dhtTemperatureInput,
+        "npk_humidity_input": npkHumidityInput,
+        "state": state,
+        "duration": duration,
+        "executed_at": executedAt.toIso8601String(),
+    };
 }

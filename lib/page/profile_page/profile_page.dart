@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile', style: defaultTextStyle),
-        toolbarHeight: SizeDevice.getHeight(context) * 0.07,
+        toolbarHeight: SizeDevice.getHeight(context) * 0.1,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

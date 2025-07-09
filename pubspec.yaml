@@ -42,7 +42,6 @@ dependencies:
   sign_in_button: ^3.2.0
   animated_toggle_switch: ^0.8.4
   gap: ^3.0.1
-  google_nav_bar: ^5.0.7
   syncfusion_flutter_charts: ^29.1.40
   intl: ^0.20.2
   dio: ^5.8.0+1
@@ -53,6 +52,8 @@ dependencies:
   expandable: ^5.0.1
   shimmer: ^3.0.0
   dio_smart_retry: ^7.0.1
+  syncfusion_flutter_datepicker: ^29.2.11
+  persistent_bottom_nav_bar: ^6.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -61,7 +61,7 @@ class AutomationLog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'WAKTU',
+                          'DURASI',
                           style: greyTextStyle.copyWith(fontSize: 12),
                         ),
                         Text(
@@ -116,22 +116,25 @@ class AutomationLog extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       AutomationLogWidget(
-                        title: 'Humidity',
+                        title: 'Lokasi Batch',
+                        value: '${log.batchLocationId}',
+                      ),
+                      AutomationLogWidget(
+                        title: 'Kelembaban tanah',
                         value: '${log.npkHumidityInput.toStringAsFixed(0)} %',
                       ),
                       AutomationLogWidget(
-                        title: 'Temperature',
-                        value:
-                            '${log.npkTemperatureInput.toStringAsFixed(1)} °C',
+                        title: 'Suhu',
+                        value: '${log.dhtTemperatureInput} °C',
+                      ),
+
+                      AutomationLogWidget(
+                        title: 'Durasi',
+                        value: '${log.duration} detik',
                       ),
                       AutomationLogWidget(
-                        title: 'Humidity Vicinity',
-                        value: '${log.dhtHumidityInput.toStringAsFixed(0)} %',
-                      ),
-                      AutomationLogWidget(
-                        title: 'Temperature Vicinity',
-                        value:
-                            '${log.dhtTemperatureInput.toStringAsFixed(1)} °C',
+                        title: 'Berjalan pada',
+                        value: '${log.executedAt}',
                       ),
                     ],
                   ),

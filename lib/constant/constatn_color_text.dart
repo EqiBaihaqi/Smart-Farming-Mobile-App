@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// Constant color
 Color primaryColor = const Color(0XFF4CAF50);
 Color secondaryColor = const Color(0XFFFABE00);
 Color aquaGreenColor = const Color(0xff00E676);
@@ -18,7 +19,10 @@ Color greyColor = const Color(0XFF9EABB1);
 Color lightGreyColor = const Color(0xffBDBDBD);
 Color emeraldGreenColor = const Color(0xFF2ECC71);
 Color tealGreenColor = const Color(0xff0A3832);
+Color foundationGreyColor = Color(0xff8c8c8c);
+Color foundationBlueColor = Color(0xff539df3);
 
+// Constant TextStyle
 TextStyle defaultTextStyle = GoogleFonts.poppins();
 TextStyle greenTextStyle = GoogleFonts.poppins(color: primaryColor);
 TextStyle blackTextStyle = GoogleFonts.poppins(color: blackColor);
