@@ -27,7 +27,7 @@ class AutomationLogResponseModel {
 class Datum {
     int id;
     int batchLocationId;
-    double dhtTemperatureInput;
+    double npkTemperatureInput;
     double npkHumidityInput;
     String state;
     int duration;
@@ -36,7 +36,7 @@ class Datum {
     Datum({
         required this.id,
         required this.batchLocationId,
-        required this.dhtTemperatureInput,
+        required this.npkTemperatureInput,
         required this.npkHumidityInput,
         required this.state,
         required this.duration,
@@ -46,7 +46,7 @@ class Datum {
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         batchLocationId: json["batch_location_id"],
-        dhtTemperatureInput: json["dht_temperature_input"]?.toDouble(),
+        npkTemperatureInput: json["npk_temperature_input"]?.toDouble(),
         npkHumidityInput: json["npk_humidity_input"]?.toDouble(),
         state: json["state"],
         duration: json["duration"],
@@ -56,7 +56,7 @@ class Datum {
     Map<String, dynamic> toJson() => {
         "id": id,
         "batch_location_id": batchLocationId,
-        "dht_temperature_input": dhtTemperatureInput,
+        "npk_temperature_input": npkTemperatureInput,
         "npk_humidity_input": npkHumidityInput,
         "state": state,
         "duration": duration,

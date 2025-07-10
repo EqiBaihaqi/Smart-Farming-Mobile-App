@@ -12,8 +12,8 @@ class AuthService {
   AuthService()
     : dio = Dio(
         BaseOptions(
-          baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
-          // baseUrl: 'http://10.0.2.2:3333',
+          // baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
+          baseUrl: 'http://10.0.2.2:3333',
           connectTimeout: Duration(seconds: 5),
           receiveTimeout: Duration(seconds: 5),
         ),

@@ -125,7 +125,7 @@ class AutomationLog extends StatelessWidget {
                       ),
                       AutomationLogWidget(
                         title: 'Suhu',
-                        value: '${log.dhtTemperatureInput} °C',
+                        value: '${log.npkTemperatureInput} °C',
                       ),
 
                       AutomationLogWidget(
