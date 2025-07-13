@@ -41,7 +41,7 @@ class AutomationService {
     try {
       final formattedDate = DateFormat('yyyy-MM-dd').format(date);
       final response = await dio.get(
-        '/api/automation/logs',
+        '/api/automation/irrigation/logs',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
         queryParameters: {
           'start_date': formattedDate,
@@ -60,7 +60,7 @@ class AutomationService {
   ) async {
     try {
       final response = await dio.get(
-        '/api/automation/status',
+        '/api/automation/irrigation/status',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       return AutomationStatusResponseModel.fromJson(response.data);
