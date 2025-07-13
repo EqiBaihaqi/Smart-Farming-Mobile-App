@@ -98,11 +98,11 @@ class ChartController extends GetxController {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     if (token == null) {
-      Get.snackbar(
-        'Error',
-        'Sesi berakhir, silahkan login kembali.',
-        snackPosition: SnackPosition.BOTTOM,
+      SnackbarWidget.showError(
+        title: 'Error',
+        message: 'Sesi berakhir, silahkan login kembali.',
       );
+
       isLoading.value = false;
       return;
     }

@@ -75,7 +75,11 @@ class AutomationLog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          log.executedAt.toLocal().toString().substring(0, 19),
+                          log.executedAt?.toLocal().toString().substring(
+                                0,
+                                19,
+                              ) ??
+                              '',
                           style: blackTextStyle.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -91,7 +95,7 @@ class AutomationLog extends StatelessWidget {
                             border: Border.all(color: keputusanColor),
                           ),
                           child: Text(
-                            keputusan,
+                            keputusan ?? '',
                             style: TextStyle(
                               color: keputusanColor,
                               fontWeight: FontWeight.bold,
@@ -117,11 +121,11 @@ class AutomationLog extends StatelessWidget {
                       const SizedBox(height: 12),
                       AutomationLogWidget(
                         title: 'Lokasi Batch',
-                        value: '${log.batchLocationId}',
+                        value: '${log.bathchLocationId}',
                       ),
                       AutomationLogWidget(
                         title: 'Kelembaban tanah',
-                        value: '${log.npkHumidityInput.toStringAsFixed(0)} %',
+                        value: '${log.npkHumidityInput?.toStringAsFixed(0)} %',
                       ),
                       AutomationLogWidget(
                         title: 'Suhu',

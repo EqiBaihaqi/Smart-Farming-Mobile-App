@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/jwt_response_model.dart';
 import 'package:smart_farm/model/login_response_model.dart';
 

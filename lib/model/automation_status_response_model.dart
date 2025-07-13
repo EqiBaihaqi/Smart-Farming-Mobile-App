@@ -29,8 +29,8 @@ class AutomationStatusResponseModel {
     final data = json.containsKey('data') ? json['data'] : json;
 
     return AutomationStatusResponseModel(
-      // DIUBAH: Ambil 'is_active' dari dalam object 'data'
-      isActive: data["is_active"],
+      // DIUBAH: Ambil 'isActive' dari dalam object 'data'
+      isActive: data["isActive"],
       // DIUBAH: Cek dulu apakah 'updated_at' ada sebelum di-parse
       updatedAt:
           data["updated_at"] == null
@@ -40,7 +40,7 @@ class AutomationStatusResponseModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "is_active": isActive,
+    "isActive": isActive,
     // DIUBAH: Cek null sebelum diubah ke string
     "updated_at": updatedAt?.toIso8601String(),
   };

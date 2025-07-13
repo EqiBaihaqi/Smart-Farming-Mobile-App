@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_farm/model/automation_log_response_model.dart';
 import 'package:smart_farm/service/automation_service.dart';
+import 'package:smart_farm/widget/snackbar_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class AutomationController extends GetxController {
@@ -39,7 +40,10 @@ class AutomationController extends GetxController {
 
       if (token == null || token.isEmpty) {
         // Jika token tidak ada, berhenti loading dan mungkin tampilkan pesan
-        Get.snackbar('Error', 'Gagal memuat status: Sesi tidak ditemukan.');
+        SnackbarWidget.showError(
+          title: 'Error',
+          message: 'Gagal memuat status: Sesi tidak ditemukan.',
+        );
         return;
       }
 
@@ -47,12 +51,15 @@ class AutomationController extends GetxController {
       automationStatus.value = response.isActive;
     } catch (e) {
       if (e is DioException && e.response?.statusCode == 401) {
-        Get.snackbar(
-          'Sesi Habis',
-          'Gagal memuat status. Silakan login kembali.',
+        SnackbarWidget.showInfo(
+          title: 'Sesi Habis',
+          message: 'Gagal memuat status. silahkan login kembali',
         );
       } else {
-        Get.snackbar('Error', 'Gagal memuat status otomatisasi.');
+        SnackbarWidget.showError(
+          title: 'Error',
+          message: 'Gagal memuat status otomatisasi.',
+        );
       }
     } finally {
       // Apapun yang terjadi (berhasil atau gagal), hentikan loading
@@ -106,10 +113,13 @@ class AutomationController extends GetxController {
         token ?? '',
         selectedDate.value,
       );
-      automationLogList.assignAll(response.data);
+      automationLogList.assignAll(response.logs);
     } catch (e) {
+      SnackbarWidget.showError(
+        title: 'Error',
+        message: 'Terjadi kesalahan saat mengambil data log',
+      );
       print(e);
-      Get.snackbar('Error', 'Terjadi kesalahan saat mengambil data log');
     } finally {
       isLoadingLogs(false);
     }

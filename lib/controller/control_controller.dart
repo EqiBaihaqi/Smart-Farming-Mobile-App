@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_farm/model/actuator_response_model.dart';
-import 'package:smart_farm/service/actuator_service.dart'; // Sesuaikan path jika perlu
+import 'package:smart_farm/service/actuator_service.dart';
+import 'package:smart_farm/widget/snackbar_widget.dart'; // Sesuaikan path jika perlu
 
 class ControlController extends GetxController {
   // Instance dari Service dan GetStorage
@@ -51,7 +52,10 @@ class ControlController extends GetxController {
       }
     } catch (e) {
       errorMessage('Gagal memuat status: ${e.toString()}');
-      Get.snackbar('Error', 'Tidak dapat memuat status aktuator.');
+      SnackbarWidget.showError(
+        title: 'Error',
+        message: 'Gagal memuat status aktuator',
+      );
     } finally {
       isLoading(false);
     }
@@ -77,16 +81,14 @@ class ControlController extends GetxController {
 
       // Jika berhasil, update state UI
       stateVariable.value = newValue;
-      Get.snackbar(
-        'Sukses',
-        'Status $name berhasil diubah.',
-        snackPosition: SnackPosition.BOTTOM,
+      SnackbarWidget.showSuccess(
+        title: 'Sukses',
+        message: 'Status $name berhasil diubah.',
       );
     } catch (e) {
-      Get.snackbar(
-        'Gagal',
-        'Tidak dapat mengubah status $name.',
-        snackPosition: SnackPosition.BOTTOM,
+      SnackbarWidget.showError(
+        title: 'Gagal',
+        message: 'Tidak dapat mengubah status $name.',
       );
       // State tidak diubah jika gagal, sehingga UI kembali ke posisi semula secara otomatis
     } finally {
