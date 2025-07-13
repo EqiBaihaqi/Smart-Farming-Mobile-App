@@ -43,15 +43,14 @@ class AutomationService {
       final response = await dio.get(
         '/api/automation/irrigation/logs',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
-        queryParameters: {
-          'start_date': formattedDate,
-          'end_date': formattedDate,
-        },
+        queryParameters: {'startDate': formattedDate, 'endDate': formattedDate},
       );
       return AutomationLogResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       print(e);
-      throw Exception("Error ${e.response?.statusCode}: Gagal mengambil data log automasi.");
+      throw Exception(
+        "Error ${e.response?.statusCode}: Gagal mengambil data log automasi.",
+      );
     }
   }
 
@@ -65,8 +64,9 @@ class AutomationService {
       );
       return AutomationStatusResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      print('gagal mengambil status automasi: $e',);
+      print('gagal mengambil status automasi: $e');
       throw e.toString();
+      
     }
   }
 

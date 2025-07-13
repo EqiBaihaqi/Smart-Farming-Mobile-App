@@ -107,6 +107,7 @@ class AutomationController extends GetxController {
   Future<void> getAutomationLog() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+    automationLogList.clear();
     try {
       isLoadingLogs(true);
       final response = await service.getAutomationLog(
@@ -115,10 +116,6 @@ class AutomationController extends GetxController {
       );
       automationLogList.assignAll(response.logs);
     } catch (e) {
-      SnackbarWidget.showError(
-        title: 'Error',
-        message: 'Terjadi kesalahan saat mengambil data log',
-      );
       print(e);
     } finally {
       isLoadingLogs(false);
@@ -163,6 +160,7 @@ class AutomationController extends GetxController {
                         selectedDate.value = pickedDate!;
                         updateDisplayDate(); // Perbarui teks tanggal
                         getAutomationLog(); // Ambil data log baru
+                        Get.back();
                       }
                       Get.back(); // Tutup dialog
                       updateDisplayDate();
