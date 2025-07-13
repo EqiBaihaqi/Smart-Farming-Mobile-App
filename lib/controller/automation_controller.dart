@@ -58,7 +58,7 @@ class AutomationController extends GetxController {
       } else {
         SnackbarWidget.showError(
           title: 'Error',
-          message: 'Gagal memuat status otomatisasi.',
+          message: 'Terjadi kesalahan saat memuat status otomatisasi.',
         );
       }
     } finally {

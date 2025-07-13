@@ -51,10 +51,10 @@ class ControlController extends GetxController {
         }
       }
     } catch (e) {
-      errorMessage('Gagal memuat status: ${e.toString()}');
+      errorMessage('Terjadi kesalahan saat memuat aktuator');
       SnackbarWidget.showError(
         title: 'Error',
-        message: 'Gagal memuat status aktuator',
+        message: 'Terjadi kesalahan saat memuat status aktuator',
       );
     } finally {
       isLoading(false);
