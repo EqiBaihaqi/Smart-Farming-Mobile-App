@@ -59,8 +59,7 @@ class AuthController extends GetxController {
           errorMessage.value =
               'Terjadi masalah pada server. Silakan coba lagi nanti.';
         } else {
-          errorMessage.value =
-              'Terjadi error tidak dikenal: Status $statusCode';
+          errorMessage.value = 'Terjadi kesalahan pada sistem';
         }
       } else {
         // B. TIDAK ADA RESPONS DARI SERVER (masalah koneksi/jaringan)

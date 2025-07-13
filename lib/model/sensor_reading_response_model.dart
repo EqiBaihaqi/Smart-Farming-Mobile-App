@@ -36,9 +36,9 @@ class SensorReadingResponseModel {
 }
 
 class Data {
-  Dht dht;
-  Npk npk1;
-  Npk npk2;
+  Dht? dht;
+  Npk? npk1;
+  Npk? npk2;
 
   Data({required this.dht, required this.npk1, required this.npk2});
 
@@ -49,9 +49,9 @@ class Data {
   );
 
   Map<String, dynamic> toJson() => {
-    "dht": dht.toJson(),
-    "npk1": npk1.toJson(),
-    "npk2": npk2.toJson(),
+    "dht": dht?.toJson(),
+    "npk1": npk1?.toJson(),
+    "npk2": npk2?.toJson(),
   };
 }
 

@@ -60,7 +60,7 @@ class AutomationService {
   ) async {
     try {
       final response = await dio.get(
-        '/api/automation/irrigation/status',
+        '/api/automation/irrigations/status',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       return AutomationStatusResponseModel.fromJson(response.data);
