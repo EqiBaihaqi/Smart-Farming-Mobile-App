@@ -119,7 +119,7 @@ class ChartController extends GetxController {
       print(result);
     } catch (e) {
       print(e.toString());
-      SnackbarWidget.showError(title: 'Gagal', message: 'Gagal memuat data');
+      SnackbarWidget.showError(title: 'Gagal', message: 'Gagal memuat data chart');
       chartData.value = [];
     } finally {
       isLoading.value = false;

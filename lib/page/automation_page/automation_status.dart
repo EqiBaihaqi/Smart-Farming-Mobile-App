@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/automation_controller.dart';
@@ -26,7 +27,7 @@ class AutomationStatus extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Obx(() {
               if (controller.automationStatus.value == true) {
@@ -46,6 +47,7 @@ class AutomationStatus extends StatelessWidget {
                 ),
               );
             }),
+            Gap(20),
             Obx(() {
               if (controller.automationStatus.value == true) {
                 return Container(

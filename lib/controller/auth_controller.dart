@@ -22,13 +22,11 @@ class AuthController extends GetxController {
       isLoading(true);
       errorMessage('');
 
-      
       final LoginResponseModel response = await _loginService.login(
         username,
         password,
       );
 
-      
       await _storageService.saveTokens(
         response.data!.token!,
         response.data!.jwtToken!,
@@ -48,20 +46,33 @@ class AuthController extends GetxController {
         message: 'Selamat datang kembali ^^',
       );
     } on DioException catch (e) {
-      // Handle Dio-specific errors
+      // Cek status code dari respons error
       final statusCode = e.response?.statusCode;
 
-      if (statusCode == 401) {
-        errorMessage('Invalid email or password');
-      } else if (statusCode == 404) {
-        errorMessage('User not found');
-      } else if (statusCode != null) {
-        errorMessage('Server error ($statusCode)');
+      // PERIKSA JENIS ERROR DIO
+      if (statusCode != null) {
+        // A. ADA RESPONS DARI SERVER (artinya koneksi berhasil, tapi ada masalah otorisasi/server)
+        final statusCode = e.response!.statusCode;
+        if (statusCode == 400) {
+          errorMessage.value = 'Email atau password yang Anda masukkan salah.';
+        } else if (statusCode == 500) {
+          errorMessage.value =
+              'Terjadi masalah pada server. Silakan coba lagi nanti.';
+        } else {
+          errorMessage.value =
+              'Terjadi error tidak dikenal: Status $statusCode';
+        }
       } else {
-        errorMessage('Network error: ${e.message}');
+        // B. TIDAK ADA RESPONS DARI SERVER (masalah koneksi/jaringan)
+        errorMessage.value =
+            'Tidak dapat terhubung ke server. Periksa koneksi internet dan pastikan server berjalan.';
       }
     } catch (e) {
-      errorMessage('Terjadi kesalahan, coba lagi nanti');
+      // Menangkap error umum lainnya
+      SnackbarWidget.showError(
+        title: 'Login Gagal',
+        message: 'Terjadi kesalahan yang tidak terduga. Coba lagi.',
+      );
     } finally {
       isLoading(false);
     }

@@ -77,6 +77,10 @@ class HomeController extends GetxController {
 
       print('inih isinya nih $dhtTemp');
     } catch (e) {
+      SnackbarWidget.showError(
+        title: 'Error',
+        message: 'Terjadi kesalahan saat mengambil data real-time',
+      );
       print(e.toString());
     } finally {
       isLoadingSensor(false);
