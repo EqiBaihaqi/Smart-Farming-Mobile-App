@@ -5,7 +5,6 @@ import 'package:smart_farm/constant/constatn_color_text.dart';
 import 'package:smart_farm/controller/home_controller.dart';
 import 'package:smart_farm/page/home_page/home_data_sensor.dart';
 import 'package:smart_farm/page/home_page/home_header.dart';
-import 'package:smart_farm/page/home_page/home_toggle.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -39,7 +38,7 @@ class HomePage extends StatelessWidget {
                     ),
 
                     Positioned(
-                      top: SizeDevice.getHeight(context) * 0.07,
+                      top: SizeDevice.getHeight(context) * 0.11,
                       left: 0,
                       right: 0,
                       child: Padding(
@@ -49,13 +48,7 @@ class HomePage extends StatelessWidget {
                         child: HomeHeader(),
                       ),
                     ),
-                    // Switch On Off irigasi
-                    Positioned(
-                      top: SizeDevice.getHeight(context) * 0.272,
-                      left: SizeDevice.getWidth(context) * 0.32,
-                      right: SizeDevice.getWidth(context) * 0.32,
-                      child: HomeToggle(),
-                    ),
+
                     // Refresh Button
                     Positioned(
                       top: SizeDevice.getHeight(context) * 0.292,

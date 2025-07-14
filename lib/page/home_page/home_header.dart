@@ -50,11 +50,7 @@ class HomeHeader extends StatelessWidget {
               ),
             ),
             Text(
-              'test aja sih2, ini tu alamat',
-              style: whiteTextStyle.copyWith(fontSize: 12),
-            ),
-            Text(
-              'Ini diisi apa ya',
+              'Kecamatan Bumiaji,\nKota Batu',
               style: whiteTextStyle.copyWith(fontSize: 12),
             ),
           ],
