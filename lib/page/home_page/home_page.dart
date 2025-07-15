@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
                     ),
 
                     Positioned(
-                      top: SizeDevice.getHeight(context) * 0.11,
+                      top: SizeDevice.getHeight(context) * 0.1,
                       left: 0,
                       right: 0,
                       child: Padding(

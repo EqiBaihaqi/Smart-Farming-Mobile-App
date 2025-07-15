@@ -24,13 +24,18 @@ class SensorDataService {
       RetryInterceptor(
         dio: dio,
         logPrint: print,
-        retries: 5, // Coba ulang maksimal 3 kali
+        retries: 10, // Coba ulang maksimal 3 kali
         retryDelays: const [
           Duration(seconds: 2), // Jeda 2 detik sebelum percobaan pertama
           Duration(seconds: 4), // Jeda 4 detik sebelum percobaan kedua
+          Duration(seconds: 6), // Jeda 8 detik sebelum percobaan ketiga
           Duration(seconds: 8), // Jeda 8 detik sebelum percobaan ketiga,
           Duration(seconds: 10), // Jeda 8 detik sebelum percobaan ketiga
           Duration(seconds: 12), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 14), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 16), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 18), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 20), // Jeda 8 detik sebelum percobaan ketiga
         ],
         // Ini memastikan retry juga berjalan pada error timeout dari server
         retryableExtraStatuses: {status408RequestTimeout},

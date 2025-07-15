@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import '../page/login_page/login_page.dart'; // Sesuaikan path
 
 class AuthInterceptor extends Interceptor {

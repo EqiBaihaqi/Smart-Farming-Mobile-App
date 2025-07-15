@@ -61,7 +61,7 @@ class AutomationLog extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'DURASI',
+                          'WAKTU PELAKASANAAN',
                           style: greyTextStyle.copyWith(fontSize: 12),
                         ),
                         Text(
