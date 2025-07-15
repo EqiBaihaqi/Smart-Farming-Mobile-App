@@ -12,38 +12,47 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeController = Get.find<HomeController>();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile', style: defaultTextStyle),
-        toolbarHeight: SizeDevice.getHeight(context) * 0.1,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            backgroundColor: greyColor.withValues(alpha: 0.3),
-            backgroundImage: AssetImage('assets/profile_icon.png'),
-            radius: 60,
+    return SafeArea(
+      minimum: EdgeInsets.only(top: SizeDevice.getHeight(context) * 0.02),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Profile',
+            style: defaultTextStyle.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            ),
           ),
-          Gap(25),
-          Center(
-            child: Obx(
-              () => Text(
-                homeController.username.value,
-                style: defaultTextStyle.copyWith(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+          toolbarHeight: SizeDevice.getHeight(context) * 0.1,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              backgroundColor: greyColor.withValues(alpha: 0.3),
+              backgroundImage: AssetImage('assets/profile_icon.png'),
+              radius: 60,
+            ),
+            Gap(25),
+            Center(
+              child: Obx(
+                () => Text(
+                  homeController.username.value,
+                  style: defaultTextStyle.copyWith(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          Gap(20),
-          Divider(height: 3, color: greyColor),
-          ProfileInformasiAkunButton(),
-          Divider(height: 3, color: greyColor),
-          ProfileKeluarButton(),
-          Divider(height: 3, color: greyColor),
-        ],
+            Gap(20),
+            Divider(height: 3, color: greyColor),
+            ProfileInformasiAkunButton(),
+            Divider(height: 3, color: greyColor),
+            ProfileKeluarButton(),
+            Divider(height: 3, color: greyColor),
+          ],
+        ),
       ),
     );
   }

@@ -14,64 +14,70 @@ class AutomationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(AutomationController());
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: SizeDevice.getHeight(context) * 0.1,
-        title: Text(
-          'Otomatisasi',
-          style: blackTextStyle.copyWith(fontSize: 22),
+    return SafeArea(
+      minimum: EdgeInsets.only(top: SizeDevice.getHeight(context) * 0.02),
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: SizeDevice.getHeight(context) * 0.1,
+          title: Text(
+            'Otomatisasi',
+            style: blackTextStyle.copyWith(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: RefreshIndicator(
-            onRefresh: () async {
-              await controller.getAutomationLog();
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AutomationStatus(),
-                const SizedBox(height: 20),
-                Divider(),
-                const SizedBox(height: 10),
-                Obx(
-                  () => Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Log Otomatisasi',
-                            style: defaultTextStyle.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await controller.getAutomationLog();
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AutomationStatus(),
+                  const SizedBox(height: 20),
+                  Divider(),
+                  const SizedBox(height: 10),
+                  Obx(
+                    () => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Log Otomatisasi',
+                              style: defaultTextStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                          Gap(5),
-                          Text(
-                            controller.displayDate.value,
-                            style: greyTextStyle.copyWith(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                            Gap(5),
+                            Text(
+                              controller.displayDate.value,
+                              style: greyTextStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          controller.selectDate(context);
-                        },
-                        icon: Icon(Icons.calendar_month),
-                      ),
-                    ],
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            controller.selectDate(context);
+                          },
+                          icon: Icon(Icons.calendar_month),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                AutomationLog(),
-              ],
+                  const SizedBox(height: 10),
+                  AutomationLog(),
+                ],
+              ),
             ),
           ),
         ),

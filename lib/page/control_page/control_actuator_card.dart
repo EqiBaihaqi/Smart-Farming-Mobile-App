@@ -19,7 +19,7 @@ class ControlActuatorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SizeDevice.getHeight(context) * 0.27,
+      height: SizeDevice.getHeight(context) * 0.3,
       width: SizeDevice.getWidth(context) * 0.45,
       child: Card(
         color: whiteColor,

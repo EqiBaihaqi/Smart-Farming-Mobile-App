@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
         context,
         screens: pages,
         hideNavigationBarWhenKeyboardAppears: true,
-        navBarHeight: SizeDevice.getHeight(context) * 0.07,
+        navBarHeight: SizeDevice.getHeight(context) * 0.085,
         items: [
           PersistentBottomNavBarItem(
             icon: Icon(Icons.home),
