@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/chart_data_sensor_response_model.dart';
 import 'package:smart_farm/model/sensor_reading_response_model.dart';
+import 'package:smart_farm/service/auth_interceptor.dart';
 
 class SensorDataService {
   late final Dio dio;
@@ -12,16 +13,18 @@ class SensorDataService {
     : dio = Dio(
         BaseOptions(
           baseUrl: Constant.baseUrl,
-          connectTimeout: Duration(seconds: 5),
-          receiveTimeout: Duration(seconds: 5),
+          connectTimeout: Duration(seconds: 3),
+          receiveTimeout: Duration(seconds: 3),
         ),
       ) {
+    // token interceptor
+    dio.interceptors.add(AuthInterceptor());
     // Tambahkan interceptor langsung di constructor
     dio.interceptors.add(
       RetryInterceptor(
         dio: dio,
         logPrint: print,
-        retries: 3, // Coba ulang maksimal 3 kali
+        retries: 5, // Coba ulang maksimal 3 kali
         retryDelays: const [
           Duration(seconds: 2), // Jeda 2 detik sebelum percobaan pertama
           Duration(seconds: 4), // Jeda 4 detik sebelum percobaan kedua
