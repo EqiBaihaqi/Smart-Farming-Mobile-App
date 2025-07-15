@@ -9,14 +9,13 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SplashController());
-    return Scaffold(
-      backgroundColor: blueColor,
-      body: Center(
-        child: Text(
-          'Logo',
-          style: defaultTextStyle.copyWith(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: whiteColor,
+          image: DecorationImage(
+            image: AssetImage('assets/logo.png'),
+            fit: BoxFit.contain,
           ),
         ),
       ),

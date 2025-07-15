@@ -30,9 +30,10 @@ class Home extends StatelessWidget {
         context,
         screens: pages,
         hideNavigationBarWhenKeyboardAppears: true,
-        navBarHeight: SizeDevice.getHeight(context) * 0.085,
+        navBarHeight: SizeDevice.getHeight(context) * 0.083,
         items: [
           PersistentBottomNavBarItem(
+            textStyle: defaultTextStyle.copyWith(fontSize: 14),
             icon: Icon(Icons.home),
             title: 'Home',
             activeColorPrimary: foundationBlueColor,
@@ -40,13 +41,15 @@ class Home extends StatelessWidget {
             inactiveColorPrimary: foundationGreyColor,
           ),
           PersistentBottomNavBarItem(
+            textStyle: defaultTextStyle.copyWith(fontSize: 14),
             icon: Icon(Icons.auto_awesome),
-            title: 'Automation',
+            title: 'Automate',
             activeColorPrimary: foundationBlueColor,
             activeColorSecondary: foundationBlueColor,
             inactiveColorPrimary: foundationGreyColor,
           ),
           PersistentBottomNavBarItem(
+            textStyle: defaultTextStyle.copyWith(fontSize: 14),
             icon: Icon(Icons.bar_chart_outlined),
             title: 'Chart',
             activeColorPrimary: foundationBlueColor,
@@ -54,6 +57,7 @@ class Home extends StatelessWidget {
             inactiveColorPrimary: foundationGreyColor,
           ),
           PersistentBottomNavBarItem(
+            textStyle: defaultTextStyle.copyWith(fontSize: 14),
             icon: Icon(Icons.settings),
             title: 'Control',
             activeColorPrimary: foundationBlueColor,
@@ -61,6 +65,7 @@ class Home extends StatelessWidget {
             inactiveColorPrimary: foundationGreyColor,
           ),
           PersistentBottomNavBarItem(
+            textStyle: defaultTextStyle.copyWith(fontSize: 14),
             icon: Icon(Icons.person),
             title: 'Profile',
             activeColorPrimary: foundationBlueColor,

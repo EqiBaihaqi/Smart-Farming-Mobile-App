@@ -11,7 +11,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> _checkToken() async {
-    await Future.delayed(const Duration(seconds: 2)); // Splash delay
+    await Future.delayed(const Duration(seconds: 3)); // Splash delay
 
     final StorageService storage = StorageService();
     final String? token =
