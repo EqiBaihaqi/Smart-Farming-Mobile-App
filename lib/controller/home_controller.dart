@@ -72,14 +72,11 @@ class HomeController extends GetxController {
       npk2Nitro.value = response.data.npk2?.nitrogen ?? 0;
       npk2Phos.value = response.data.npk2?.phosphorus ?? 0;
       npk2Potas.value = response.data.npk2?.potassium ?? 0;
-
-      print('inih isinya nih $dhtTemp');
     } catch (e) {
       SnackbarWidget.showError(
         title: 'Error',
         message: 'Terjadi kesalahan saat mengambil data real-time',
       );
-      print(e.toString());
     } finally {
       isLoadingSensor(false);
     }

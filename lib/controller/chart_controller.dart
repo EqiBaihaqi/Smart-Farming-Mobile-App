@@ -116,9 +116,7 @@ class ChartController extends GetxController {
         date: selectedDate.value,
       );
       chartData.value = result;
-      print(result);
     } catch (e) {
-      print(e.toString());
       SnackbarWidget.showError(title: 'Error', message: 'Terjadi kesalahan saat memuat data chart');
       chartData.value = [];
     } finally {

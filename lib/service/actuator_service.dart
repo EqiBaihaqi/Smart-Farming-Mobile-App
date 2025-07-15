@@ -51,8 +51,7 @@ class ActuatorService {
     } on DioException catch (e) {
       // Tangani error spesifik dari Dio dan lemparkan kembali sebagai Exception standar
       // agar bisa ditangkap oleh controller.
-      print("Error fetching status: $e"); // Untuk debugging
-      throw Exception('Gagal mengambil data dari API');
+      throw Exception('Gagal mengambil data dari API : $e');
     }
   }
 
@@ -65,8 +64,7 @@ class ActuatorService {
         data: FormData.fromMap({'action': statusString}),
       );
     } on DioException catch (e) {
-      print('Error fetching status : $e');
-      throw Exception('Gagal mengeksekusi actuator pump');
+      throw Exception('Gagal mengeksekusi actuator pump : $e');
     }
   }
 
@@ -79,8 +77,7 @@ class ActuatorService {
         data: FormData.fromMap({'action': statusString}),
       );
     } on DioException catch (e) {
-      print('Error fetching status : $e');
-      throw Exception('Gagal mengeksekusi actuator pump');
+      throw Exception('Gagal mengeksekusi actuator pump: $e');
     }
   }
 
@@ -93,8 +90,7 @@ class ActuatorService {
         data: FormData.fromMap({'action': statusString}),
       );
     } on DioException catch (e) {
-      print('Error fetching status : $e');
-      throw Exception('Gagal mengeksekusi actuator pump');
+      throw Exception('Gagal mengeksekusi actuator pump : $e');
     }
   }
 }

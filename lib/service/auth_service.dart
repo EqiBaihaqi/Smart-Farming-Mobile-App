@@ -67,15 +67,7 @@ class AuthService {
         throw Exception('Failed to login: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      // --- PERUBAHAN UTAMA ---
-      // Jangan membuat Exception baru. Lemparkan kembali error aslinya
-      // agar Controller bisa membaca status code dan detail lainnya.
-      print("Dio Error in Service: ${e.response?.data}");
-      rethrow;
-    } catch (e) {
-      print("Unexpected Error in Service: $e");
-      // Untuk error tak terduga lainnya, buat Exception baru
-      throw Exception('Terjadi kesalahan yang tidak terduga.');
+      throw Exception("Error ${e.response?.statusCode}: Gagal melakukan login");
     }
   }
 }

@@ -48,7 +48,6 @@ class AutomationService {
       );
       return AutomationLogResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      print(e);
       throw Exception(
         "Error ${e.response?.statusCode}: Gagal mengambil data log automasi.",
       );
@@ -65,7 +64,6 @@ class AutomationService {
       );
       return AutomationStatusResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      print('gagal mengambil status automasi: $e');
       throw e.toString();
     }
   }

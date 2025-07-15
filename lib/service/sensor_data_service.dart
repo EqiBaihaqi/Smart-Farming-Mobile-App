@@ -55,7 +55,6 @@ class SensorDataService {
     required DateTime date,
     required String token,
   }) async {
-    print("--- MENJALANKAN KODE getChartData DENGAN LOGIKA FLEKSIBEL ---");
     try {
       final String formattedDate = DateFormat('yyyy-MM-dd').format(date);
       const String endpoint = '/api/sensor-readings/search';
@@ -74,17 +73,12 @@ class SensorDataService {
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
 
-      print('TOKEN YANG DIKIRIM: $token');
-      print('URL LENGKAP: ${response.realUri}');
-      print('RESPONS LENGKAP DARI FLUTTER: ${response.data}');
-
       if (response.statusCode == 200) {
         dynamic responseBody = response.data;
         if (responseBody is String) {
           try {
             responseBody = json.decode(responseBody);
           } catch (e) {
-            print('Gagal parsing JSON: $e');
             return [];
           }
         }
@@ -95,7 +89,6 @@ class SensorDataService {
         // Kasus khusus ketika dataPayload adalah Map kosong
         if (dataPayload == null ||
             (dataPayload is Map && dataPayload.isEmpty)) {
-          print("Data payload kosong atau null");
           return [];
         }
 
@@ -103,11 +96,8 @@ class SensorDataService {
 
         // Handle berbagai format respons
         if (dataPayload is List) {
-          print("Mendeteksi respons sebagai List (kasus DHT).");
           responseData = dataPayload;
         } else if (dataPayload is Map) {
-          print("Mendeteksi respons sebagai Map (kasus NPK).");
-
           // Cari kunci yang sesuai dengan sensor
           if (dataPayload.containsKey(sensor) && dataPayload[sensor] is List) {
             responseData = dataPayload[sensor];
@@ -120,15 +110,12 @@ class SensorDataService {
             if (key.isNotEmpty) {
               responseData = dataPayload[key];
             } else {
-              // Jika tidak ada data yang ditemukan sama sekali
-              print("Tidak ada list data yang ditemukan dalam Map");
               return [];
             }
           }
         }
 
         if (responseData.isEmpty) {
-          print("List data kosong");
           return [];
         }
 
@@ -141,7 +128,6 @@ class SensorDataService {
 
                     // Skip jika nilai metric null atau tidak valid
                     if (metricValue == null) {
-                      print("Nilai metric null untuk item: $item");
                       return null;
                     }
 
@@ -150,7 +136,6 @@ class SensorDataService {
                     final hour = item['hour']?.toString() ?? '0';
 
                     if (date.isEmpty) {
-                      print("Tanggal tidak valid untuk item: $item");
                       return null;
                     }
 
@@ -159,29 +144,21 @@ class SensorDataService {
                       "avg_value": metricValue,
                     });
                   } catch (e) {
-                    print('Error memproses item: $e\nItem: $item');
                     return null;
                   }
                 })
                 .where((item) => item != null)
                 .toList();
-
-        print('Data yang berhasil diproses: ${result.length} item');
         return result.cast<ChartDataSensorResponseModel>();
       } else {
         throw Exception('Gagal memuat data. Status: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      print('DioError: ${e.message}');
-      if (e.response != null) {
-        print('Response data: ${e.response?.data}');
-        print('Response status: ${e.response?.statusCode}');
-      }
+      if (e.response != null) {}
       throw Exception(
         e.response?.data?['message'] ?? 'Kesalahan jaringan: ${e.message}',
       );
-    } catch (e, s) {
-      print('Error di getChartData: $e\nStack: $s');
+    } catch (e) {
       throw Exception('Gagal memproses data: $e');
     }
   }
