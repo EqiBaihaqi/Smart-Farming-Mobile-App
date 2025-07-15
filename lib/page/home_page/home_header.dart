@@ -19,7 +19,7 @@ class HomeHeader extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  'Hello,  ',
+                  'Hello, ',
                   style: whiteTextStyle.copyWith(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
