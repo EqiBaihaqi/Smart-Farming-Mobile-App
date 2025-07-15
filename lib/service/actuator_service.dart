@@ -12,8 +12,8 @@ class ActuatorService {
         BaseOptions(
           baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
           // baseUrl: 'http://10.0.2.2:3333',
-          connectTimeout: Duration(seconds: 3),
-          receiveTimeout: Duration(seconds: 3),
+          connectTimeout: Duration(seconds: 2),
+          receiveTimeout: Duration(seconds: 2),
         ),
       ) {
     // token interceptor

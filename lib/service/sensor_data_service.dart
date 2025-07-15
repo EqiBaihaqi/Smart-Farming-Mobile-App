@@ -13,8 +13,8 @@ class SensorDataService {
     : dio = Dio(
         BaseOptions(
           baseUrl: Constant.baseUrl,
-          connectTimeout: Duration(seconds: 3),
-          receiveTimeout: Duration(seconds: 3),
+          connectTimeout: Duration(seconds: 2),
+          receiveTimeout: Duration(seconds: 2),
         ),
       ) {
     // token interceptor
