@@ -114,12 +114,13 @@ class AutomationController extends GetxController {
         token ?? '',
         selectedDate.value,
       );
+
       automationLogList.assignAll(response.logs);
     } catch (e) {
-       SnackbarWidget.showError(
-          title: 'Error',
-          message: 'Terjadi kesalahan saat memuat log otomatisasi.',
-        );
+      SnackbarWidget.showError(
+        title: 'Error',
+        message: 'Terjadi kesalahan saat memuat log otomatisasi.',
+      );
     } finally {
       isLoadingLogs(false);
     }

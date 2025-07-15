@@ -138,7 +138,11 @@ class AutomationLog extends StatelessWidget {
                       ),
                       AutomationLogWidget(
                         title: 'Berjalan pada',
-                        value: '${log.executedAt}',
+                        value: log.executedAt?.toLocal().toString().substring(
+                                0,
+                                19,
+                              ) ??
+                              '',
                       ),
                     ],
                   ),

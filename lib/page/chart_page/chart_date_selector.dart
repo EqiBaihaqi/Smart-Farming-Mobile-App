@@ -20,7 +20,11 @@ class ChartDateSelector extends StatelessWidget {
           minimumSize: const Size.fromHeight(45),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
-        onPressed: () => controller.selectDate(context),
+        onPressed:
+            () =>
+                controller.isLoading.value
+                    ? null
+                    : controller.selectDate(context),
       ),
     );
   }

@@ -21,21 +21,21 @@ class AutomationService {
     dio.interceptors.add(AuthInterceptor());
     // Tambahkan interceptor langsung di constructor
     dio.interceptors.add(
-    RetryInterceptor(
+      RetryInterceptor(
         dio: dio,
         logPrint: print,
         retries: 10, // Coba ulang maksimal 3 kali
         retryDelays: const [
           Duration(seconds: 2), // Jeda 2 detik sebelum percobaan pertama
-          Duration(seconds: 4), // Jeda 4 detik sebelum percobaan kedua
-          Duration(seconds: 6), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 8), // Jeda 8 detik sebelum percobaan ketiga,
-          Duration(seconds: 10), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 12), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 14), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 16), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 18), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 20), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 4 detik sebelum percobaan kedua
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga,
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
+          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
         ],
         // Ini memastikan retry juga berjalan pada error timeout dari server
         retryableExtraStatuses: {status408RequestTimeout},
@@ -56,9 +56,12 @@ class AutomationService {
       );
       return AutomationLogResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      throw Exception(
-        "Error ${e.response?.statusCode}: Gagal mengambil data log automasi.",
-      );
+      if (e.response?.statusCode == 404) {
+        return AutomationLogResponseModel(logs: []);
+      }
+       throw Exception(
+      "Error ${e.response?.statusCode}: Gagal mengambil data log automasi.",
+    );
     }
   }
 

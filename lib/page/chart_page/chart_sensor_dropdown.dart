@@ -30,7 +30,8 @@ class ChartSensorDropdown extends StatelessWidget {
                 ),
               );
             }).toList(),
-        onChanged: controller.onSensorChanged,
+        onChanged:
+            controller.isLoading.value ? null : controller.onSensorChanged,
       ),
     );
   }

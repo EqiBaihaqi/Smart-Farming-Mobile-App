@@ -54,7 +54,7 @@ class ChartMetricDropdown extends StatelessWidget {
                 ),
               );
             }).toList(),
-        onChanged: controller.onMetricChanged,
+        onChanged: controller.isLoading.value ? null : controller.onMetricChanged,
       );
     });
   }
