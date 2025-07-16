@@ -60,7 +60,7 @@ class AuthService {
         pref.setString('jwtToken', data.data!.jwtToken!);
         pref.setString('username', decodedToken.user?.username ?? 'unknown');
         pref.setString('email', decodedToken.user?.email ?? 'unknown');
-        pref.setString('fullName', decodedToken.user?.fullname ?? 'unknown');
+        pref.setString('fullname', decodedToken.user?.fullname ?? 'unknown');
         pref.setBool('isLoggedIn', true);
         return data;
       } else {

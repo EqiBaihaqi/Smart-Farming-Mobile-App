@@ -25,7 +25,7 @@ class ProfileInformasiAkunDetail extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                'Username : ${homeController.username.value}',
+                'Nama : ${homeController.fullname.value}',
                 style: defaultTextStyle.copyWith(fontSize: 20),
               ),
             ),
@@ -33,7 +33,7 @@ class ProfileInformasiAkunDetail extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Text(
-                'Fullname : ${homeController.fullname.value}',
+                'Username : ${homeController.username.value}',
                 style: defaultTextStyle.copyWith(fontSize: 20),
               ),
             ),

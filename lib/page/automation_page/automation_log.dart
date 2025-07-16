@@ -120,7 +120,7 @@ class AutomationLog extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       AutomationLogWidget(
-                        title: 'Lokasi Batch',
+                        title: 'Lokasi Bet',
                         value: '${log.bathchLocationId}',
                       ),
                       AutomationLogWidget(

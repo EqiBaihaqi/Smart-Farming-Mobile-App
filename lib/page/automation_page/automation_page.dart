@@ -25,7 +25,7 @@ class AutomationPage extends StatelessWidget {
           appBar: AppBar(
             toolbarHeight: SizeDevice.getHeight(context) * 0.1,
             title: Text(
-              'Otomatisasi',
+              'Otomatisasi Irigasi',
               style: blackTextStyle.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
