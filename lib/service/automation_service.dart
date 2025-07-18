@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/automation_log_response_model.dart';
 import 'package:smart_farm/model/automation_status_response_model.dart';
-import 'package:smart_farm/service/auth_interceptor.dart';
+
 
 class AutomationService {
   final Dio dio;
@@ -17,30 +16,9 @@ class AutomationService {
           receiveTimeout: Duration(seconds: 2),
         ),
       ) {
-    // token interceptor
-    dio.interceptors.add(AuthInterceptor());
     // Tambahkan interceptor langsung di constructor
-    dio.interceptors.add(
-      RetryInterceptor(
-        dio: dio,
-        logPrint: print,
-        retries: 10, // Coba ulang maksimal 3 kali
-        retryDelays: const [
-          Duration(seconds: 2), // Jeda 2 detik sebelum percobaan pertama
-          Duration(seconds: 2), // Jeda 4 detik sebelum percobaan kedua
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga,
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 2), // Jeda 8 detik sebelum percobaan ketiga
-        ],
-        // Ini memastikan retry juga berjalan pada error timeout dari server
-        retryableExtraStatuses: {status408RequestTimeout},
-      ),
-    );
+  
+  
   }
 
   Future<AutomationLogResponseModel> getAutomationLog(

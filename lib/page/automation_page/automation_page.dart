@@ -23,6 +23,8 @@ class AutomationPage extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
+            scrolledUnderElevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             toolbarHeight: SizeDevice.getHeight(context) * 0.1,
             title: Text(
               'Otomatisasi Irigasi',

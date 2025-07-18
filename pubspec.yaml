@@ -51,7 +51,6 @@ dependencies:
   fl_chart: ^1.0.0
   expandable: ^5.0.1
   shimmer: ^3.0.0
-  dio_smart_retry: ^7.0.1
   syncfusion_flutter_datepicker: ^29.2.11
   persistent_bottom_nav_bar: ^6.2.1
   flutter_launcher_icons: ^0.14.4

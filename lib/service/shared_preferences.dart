@@ -13,17 +13,14 @@ class StorageService {
     await prefs.setString(_jwtTokenKey, jwtToken);
   }
 
-  Future<Map<String, String?>> getTokens() async {
-    final prefs = await SharedPreferences.getInstance();
-    return {
-      'token': prefs.getString(_tokenKey),
-      'jwtToken': prefs.getString(_jwtTokenKey),
-    };
-  }
-
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_tokenKey);
+  }
+
+  Future<String?> getJwtToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_jwtTokenKey);
   }
 
   Future<void> clearTokens() async {

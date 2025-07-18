@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/chart_data_sensor_response_model.dart';
 import 'package:smart_farm/model/sensor_reading_response_model.dart';
-import 'package:smart_farm/service/auth_interceptor.dart';
 
 class SensorDataService {
   late final Dio dio;
@@ -16,32 +14,7 @@ class SensorDataService {
           connectTimeout: Duration(seconds: 2),
           receiveTimeout: Duration(seconds: 2),
         ),
-      ) {
-    // token interceptor
-    dio.interceptors.add(AuthInterceptor());
-    // Tambahkan interceptor langsung di constructor
-    dio.interceptors.add(
-      RetryInterceptor(
-        dio: dio,
-        logPrint: print,
-        retries: 10, // Coba ulang maksimal 3 kali
-        retryDelays: const [
-          Duration(seconds: 2), // Jeda 2 detik sebelum percobaan pertama
-          Duration(seconds: 4), // Jeda 4 detik sebelum percobaan kedua
-          Duration(seconds: 6), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 8), // Jeda 8 detik sebelum percobaan ketiga,
-          Duration(seconds: 10), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 12), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 14), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 16), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 18), // Jeda 8 detik sebelum percobaan ketiga
-          Duration(seconds: 20), // Jeda 8 detik sebelum percobaan ketiga
-        ],
-        // Ini memastikan retry juga berjalan pada error timeout dari server
-        retryableExtraStatuses: {status408RequestTimeout},
-      ),
-    );
-  }
+      );
 
   Future<SensorReadingResponseModel> getLatestDataSensor(String token) async {
     try {
