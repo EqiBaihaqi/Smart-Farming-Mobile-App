@@ -9,13 +9,17 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(SplashController());
-    return Center(
-      child: Container(
-        decoration: BoxDecoration(
-          color: whiteColor,
-          image: DecorationImage(
-            image: AssetImage('assets/logo.png'),
-            fit: BoxFit.contain,
+    return Container(
+      color: foundationBlueColor,
+      child: Center(
+        child: Container(
+          width: SizeDevice.getWidth(context) * 0.6,
+          height: SizeDevice.getHeight(context) * 0.6,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/agrilink-vocpro-logo-new.png'),
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),
