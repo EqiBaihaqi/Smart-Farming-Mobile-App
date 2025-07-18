@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:smart_farm/controller/auth_controller.dart';
 
 class LoginForm extends StatelessWidget {
   final TextEditingController emailController;
@@ -16,7 +14,6 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthController authController = Get.find();
     return Form(
       key: formKey,
       child: Column(
@@ -27,6 +24,7 @@ class LoginForm extends StatelessWidget {
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               labelText: 'Email',
+
               prefixIcon: const Icon(Icons.email),
               filled: true,
               fillColor: Colors.white,
@@ -59,15 +57,6 @@ class LoginForm extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Error Message & Login Button
-          Obx(() {
-            if (authController.errorMessage.isNotEmpty) {
-              return Text(
-                authController.errorMessage.value,
-                style: const TextStyle(color: Colors.red),
-              );
-            }
-            return const SizedBox();
-          }),
         ],
       ),
     );

@@ -18,9 +18,9 @@ class SplashController extends GetxController {
         await storage.getToken(); // Assuming you have this method
     final String? jwtToken = await storage.getJwtToken();
     if (token != null && !JwtDecoder.isExpired(jwtToken!)) {
-      Get.offAll(Home());
+      Get.offAll(() => Home());
     } else {
-      Get.offAll(LoginPage());
+      Get.offAll(() => LoginPage());
     }
   }
 }

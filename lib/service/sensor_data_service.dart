@@ -1,21 +1,31 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/chart_data_sensor_response_model.dart';
 import 'package:smart_farm/model/sensor_reading_response_model.dart';
 
 class SensorDataService {
-  late final Dio dio;
+  Dio dio = Dio();
   SensorDataService()
     : dio = Dio(
         BaseOptions(
-          baseUrl: Constant.baseUrl,
-          connectTimeout: Duration(seconds: 2),
-          receiveTimeout: Duration(seconds: 2),
+          baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
+          // baseUrl: 'http://10.0.2.2:3333',
+          connectTimeout: Duration(seconds: 3),
+          receiveTimeout: Duration(seconds: 3),
         ),
-      );
-
+      ) {
+    dio.interceptors.add(
+      RetryInterceptor(
+        dio: dio,
+        logPrint: print,
+        retries: 3,
+        retryableExtraStatuses: {status408RequestTimeout},
+      ),
+    );
+  }
   Future<SensorReadingResponseModel> getLatestDataSensor(String token) async {
     try {
       final response = await dio.get(

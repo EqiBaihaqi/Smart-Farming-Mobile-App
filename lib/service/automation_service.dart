@@ -1,24 +1,29 @@
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/automation_log_response_model.dart';
 import 'package:smart_farm/model/automation_status_response_model.dart';
 
-
 class AutomationService {
-  final Dio dio;
+  Dio dio = Dio();
   AutomationService()
     : dio = Dio(
         BaseOptions(
           baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
           // baseUrl: 'http://10.0.2.2:3333',
-          connectTimeout: Duration(seconds: 2),
-          receiveTimeout: Duration(seconds: 2),
+          connectTimeout: Duration(seconds: 3),
+          receiveTimeout: Duration(seconds: 3),
         ),
       ) {
-    // Tambahkan interceptor langsung di constructor
-  
-  
+    dio.interceptors.add(
+      RetryInterceptor(
+        dio: dio,
+        logPrint: print,
+        retries: 3,
+        retryableExtraStatuses: {status408RequestTimeout},
+      ),
+    );
   }
 
   Future<AutomationLogResponseModel> getAutomationLog(
@@ -37,9 +42,9 @@ class AutomationService {
       if (e.response?.statusCode == 404) {
         return AutomationLogResponseModel(logs: []);
       }
-       throw Exception(
-      "Error ${e.response?.statusCode}: Gagal mengambil data log automasi.",
-    );
+      throw Exception(
+        "Error ${e.response?.statusCode}: Gagal mengambil data log automasi.",
+      );
     }
   }
 

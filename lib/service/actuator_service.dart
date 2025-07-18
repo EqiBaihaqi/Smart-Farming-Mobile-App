@@ -1,19 +1,28 @@
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:smart_farm/constant/constant.dart';
 import 'package:smart_farm/model/actuator_response_model.dart';
 
 class ActuatorService {
   Dio dio = Dio();
-
   ActuatorService()
     : dio = Dio(
         BaseOptions(
           baseUrl: Constant.baseUrl, // Pastikan Constant.baseUrl sudah benar
           // baseUrl: 'http://10.0.2.2:3333',
-          connectTimeout: Duration(seconds: 2),
-          receiveTimeout: Duration(seconds: 2),
+          connectTimeout: Duration(seconds: 3),
+          receiveTimeout: Duration(seconds: 3),
         ),
-      );
+      ) {
+    dio.interceptors.add(
+      RetryInterceptor(
+        dio: dio,
+        logPrint: print,
+        retries: 3,
+        retryableExtraStatuses: {status408RequestTimeout},
+      ),
+    );
+  }
 
   // --- Method untuk mengambil status semua actuator ---
   Future<List<Actuator>> fetchActuatorStatus(String token) async {

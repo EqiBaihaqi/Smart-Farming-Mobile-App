@@ -15,6 +15,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             Positioned(
@@ -24,7 +25,7 @@ class LoginPage extends StatelessWidget {
               top: 0,
               right: 0,
               left: 0,
-              height: SizeDevice.getHeight(context) * 0.3,
+              height: SizeDevice.getHeight(context) * 0.24,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -39,7 +40,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: SizeDevice.getHeight(context) * 0.32,
+              top: SizeDevice.getHeight(context) * 0.28,
               right: 0,
               left: 0,
               child: Center(
@@ -53,7 +54,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: SizeDevice.getHeight(context) * 0.41,
+              top: SizeDevice.getHeight(context) * 0.37,
               left: 20,
               right: 20,
               child: LoginForm(
@@ -64,7 +65,7 @@ class LoginPage extends StatelessWidget {
             ),
             // Login Button (Positioned below the form)
             Positioned(
-              top: SizeDevice.getHeight(context) * 0.61,
+              top: SizeDevice.getHeight(context) * 0.55,
               left: 20,
               right: 20,
               child: Obx(() {
@@ -88,6 +89,20 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     );
+              }),
+            ),
+            Positioned(
+              top: SizeDevice.getHeight(context) * 0.64,
+              left: 20,
+              right: 20,
+              child: Obx(() {
+                if (authController.errorMessage.isNotEmpty) {
+                  return Text(
+                    authController.errorMessage.value,
+                    style: defaultTextStyle.copyWith(color: redColor),
+                  );
+                }
+                return const SizedBox();
               }),
             ),
           ],

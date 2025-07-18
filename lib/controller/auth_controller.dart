@@ -64,7 +64,7 @@ class AuthController extends GetxController {
       } else {
         // B. TIDAK ADA RESPONS DARI SERVER (masalah koneksi/jaringan)
         errorMessage.value =
-            'Tidak dapat terhubung ke server. Periksa koneksi internet dan pastikan server berjalan.';
+            'Tidak dapat terhubung ke server. Silahkan coba lagi';
       }
     } catch (e) {
       // Menangkap error umum lainnya

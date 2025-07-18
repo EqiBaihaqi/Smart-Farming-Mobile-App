@@ -40,7 +40,20 @@ class ControlPage extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             if (controller.errorMessage.isNotEmpty) {
-              return Center(child: Text(controller.errorMessage.value));
+              return SizedBox(
+                width: double.infinity,
+                height: SizeDevice.getHeight(context) * 0.7,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Center(
+                    child: Text(
+                      controller.errorMessage.value,
+                      style: defaultTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              );
             }
 
             // Tampilkan UI utama

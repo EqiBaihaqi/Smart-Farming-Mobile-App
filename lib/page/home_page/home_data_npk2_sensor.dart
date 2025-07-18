@@ -42,7 +42,12 @@ class HomeDataNpk2Sensor extends StatelessWidget {
             Obx(
               () =>
                   homeController.isLoadingSensor.value
-                      ? CircularProgressIndicator()
+                      ? Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeDevice.getHeight(context) * 0.08,
+                        ),
+                        child: CircularProgressIndicator(),
+                      )
                       : Column(
                         children: [
                           Padding(

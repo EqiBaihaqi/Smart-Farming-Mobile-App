@@ -36,6 +36,7 @@ class AutomationPage extends StatelessWidget {
             centerTitle: true,
           ),
           body: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: RefreshIndicator(
